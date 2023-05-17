@@ -1,6 +1,6 @@
 # Belvo Java Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/{company})](https://central.sonatype.dev/artifact/io.github.fern-api/{company}/0.0.7/versions) 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/belvo)](https://central.sonatype.dev/artifact/io.github.fern-api/belvo/0.0.32/versions) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 ## Documentation
@@ -33,11 +33,22 @@ Add the dependency in your `pom.xml`:
 
 ## Usage
 
-Check out the [sample app](.sample-app/app.java) which consumes this SDK!
+Check out the [sample app](sample-app/src/main/java/sample/App.java) which consumes this SDK!
 
 ```java
-// start with env variables
-TODO
+BelvoApiClient belvo = BelvoApiClient.builder()
+    .credentials("YOUR_SECRET_ID", "YOUR_SECRET_PASSWORD")
+    .build();
+
+Link link = belvo.links().registerLink(LinksRequest.builder()
+    .institution("banamex_mx_retail")
+    .username("username")
+    .password("password")
+    .accessMode(EnumLinkAccessModeRequest.RECURRENT)
+    .credentialsStorage("30d")
+    .build());
+
+System.out.println(link);
 ```
 
 ## Beta status
