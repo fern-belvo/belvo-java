@@ -1,11 +1,35 @@
-# {Company} Java Library
+# Belvo Java Library
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/{company})](https://central.sonatype.dev/artifact/io.github.fern-api/{company}/0.0.7/versions) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 ## Documentation
 
-API documentation is available at <{docs_url}>.
+API documentation is available [here]([url](https://developers.belvo.com/reference/using-the-api-reference)).
+
+## Install
+
+### Gradle
+
+Add the dependency in your `build.gradle`:
+
+```groovy
+dependencies {
+    implementation 'io.github.fern-api:belvo:0.x.x'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>io.github.fern-api</groupId>
+    <artifactId>belvo</artifactId>
+    <version>0.x.x</version>
+</dependency>
+```
 
 ## Usage
 
