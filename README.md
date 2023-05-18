@@ -1,6 +1,6 @@
 # Belvo Java Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/belvo)](https://central.sonatype.dev/artifact/io.github.fern-api/belvo/0.0.32/versions) 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/belvo)](https://central.sonatype.com/artifact/io.github.fern-api/belvo/0.0.33) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 ## Documentation
