@@ -14,6 +14,7 @@ import java.lang.Override;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -168,7 +169,7 @@ public final class AccountsClientImpl implements AccountsClient {
     }
 
     @Override
-    public List<Account> retrieveAccounts(RetrieveAccountsRequest request) {
+    public List<Optional<Account>> retrieveAccounts(RetrieveAccountsRequest request) {
       HttpUrl.Builder _httpUrlBuilder = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegment("/api/accounts")
         ;if (request.getOmit().isPresent()) {
@@ -195,7 +196,7 @@ public final class AccountsClientImpl implements AccountsClient {
         try {
           Response _response = clientOptions.httpClient().newCall(_request).execute();
           if (_response.isSuccessful()) {
-            return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), new TypeReference<List<Account>>() {});
+            return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), new TypeReference<List<Optional<Account>>>() {});
           }
           throw new RuntimeException();
         }
@@ -205,7 +206,7 @@ public final class AccountsClientImpl implements AccountsClient {
       }
 
       @Override
-      public List<Account> patchAccounts(PatchAccountsRequest request) {
+      public List<Optional<Account>> patchAccounts(PatchAccountsRequest request) {
         HttpUrl.Builder _httpUrlBuilder = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
           .addPathSegment("/api/accounts")
           ;if (request.getOmit().isPresent()) {
@@ -232,7 +233,7 @@ public final class AccountsClientImpl implements AccountsClient {
           try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-              return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), new TypeReference<List<Account>>() {});
+              return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), new TypeReference<List<Optional<Account>>>() {});
             }
             throw new RuntimeException();
           }
@@ -242,7 +243,7 @@ public final class AccountsClientImpl implements AccountsClient {
         }
 
         @Override
-        public Account detailAccount(String id, DetailAccountRequest request) {
+        public Optional<Account> detailAccount(String id, DetailAccountRequest request) {
           HttpUrl.Builder _httpUrlBuilder = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegment("/api/accounts/")
             .addPathSegment(id)
@@ -264,7 +265,7 @@ public final class AccountsClientImpl implements AccountsClient {
             try {
               Response _response = clientOptions.httpClient().newCall(_request).execute();
               if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Account.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), new TypeReference<Optional<Account>>() {});
               }
               throw new RuntimeException();
             }

@@ -24,22 +24,24 @@ public final class RiskInsights {
 
   private final String createdAt;
 
-  private final RiskInsightsTransactionMetrics transactionsMetrics;
+  private final Optional<RiskInsightsTransactionMetrics> transactionsMetrics;
 
-  private final RiskInsightsBalanceMetrics balancesMetrics;
+  private final Optional<RiskInsightsBalanceMetrics> balancesMetrics;
 
-  private final RiskInsightsCashflowMetrics cashflowMetrics;
+  private final Optional<RiskInsightsCashflowMetrics> cashflowMetrics;
 
-  private final RiskInsightsCreditCardMetrics creditCardsMetrics;
+  private final Optional<RiskInsightsCreditCardMetrics> creditCardsMetrics;
 
-  private final RiskInsightsLoansMetrics loansMetrics;
+  private final Optional<RiskInsightsLoansMetrics> loansMetrics;
 
   private int _cachedHashCode;
 
   RiskInsights(String id, String link, Optional<List<String>> accounts, String createdAt,
-      RiskInsightsTransactionMetrics transactionsMetrics,
-      RiskInsightsBalanceMetrics balancesMetrics, RiskInsightsCashflowMetrics cashflowMetrics,
-      RiskInsightsCreditCardMetrics creditCardsMetrics, RiskInsightsLoansMetrics loansMetrics) {
+      Optional<RiskInsightsTransactionMetrics> transactionsMetrics,
+      Optional<RiskInsightsBalanceMetrics> balancesMetrics,
+      Optional<RiskInsightsCashflowMetrics> cashflowMetrics,
+      Optional<RiskInsightsCreditCardMetrics> creditCardsMetrics,
+      Optional<RiskInsightsLoansMetrics> loansMetrics) {
     this.id = id;
     this.link = link;
     this.accounts = accounts;
@@ -84,27 +86,27 @@ public final class RiskInsights {
   }
 
   @JsonProperty("transactions_metrics")
-  public RiskInsightsTransactionMetrics getTransactionsMetrics() {
+  public Optional<RiskInsightsTransactionMetrics> getTransactionsMetrics() {
     return transactionsMetrics;
   }
 
   @JsonProperty("balances_metrics")
-  public RiskInsightsBalanceMetrics getBalancesMetrics() {
+  public Optional<RiskInsightsBalanceMetrics> getBalancesMetrics() {
     return balancesMetrics;
   }
 
   @JsonProperty("cashflow_metrics")
-  public RiskInsightsCashflowMetrics getCashflowMetrics() {
+  public Optional<RiskInsightsCashflowMetrics> getCashflowMetrics() {
     return cashflowMetrics;
   }
 
   @JsonProperty("credit_cards_metrics")
-  public RiskInsightsCreditCardMetrics getCreditCardsMetrics() {
+  public Optional<RiskInsightsCreditCardMetrics> getCreditCardsMetrics() {
     return creditCardsMetrics;
   }
 
   @JsonProperty("loans_metrics")
-  public RiskInsightsLoansMetrics getLoansMetrics() {
+  public Optional<RiskInsightsLoansMetrics> getLoansMetrics() {
     return loansMetrics;
   }
 
@@ -146,27 +148,7 @@ public final class RiskInsights {
   }
 
   public interface CreatedAtStage {
-    TransactionsMetricsStage createdAt(String createdAt);
-  }
-
-  public interface TransactionsMetricsStage {
-    BalancesMetricsStage transactionsMetrics(RiskInsightsTransactionMetrics transactionsMetrics);
-  }
-
-  public interface BalancesMetricsStage {
-    CashflowMetricsStage balancesMetrics(RiskInsightsBalanceMetrics balancesMetrics);
-  }
-
-  public interface CashflowMetricsStage {
-    CreditCardsMetricsStage cashflowMetrics(RiskInsightsCashflowMetrics cashflowMetrics);
-  }
-
-  public interface CreditCardsMetricsStage {
-    LoansMetricsStage creditCardsMetrics(RiskInsightsCreditCardMetrics creditCardsMetrics);
-  }
-
-  public interface LoansMetricsStage {
-    _FinalStage loansMetrics(RiskInsightsLoansMetrics loansMetrics);
+    _FinalStage createdAt(String createdAt);
   }
 
   public interface _FinalStage {
@@ -175,27 +157,47 @@ public final class RiskInsights {
     _FinalStage accounts(Optional<List<String>> accounts);
 
     _FinalStage accounts(List<String> accounts);
+
+    _FinalStage transactionsMetrics(Optional<RiskInsightsTransactionMetrics> transactionsMetrics);
+
+    _FinalStage transactionsMetrics(RiskInsightsTransactionMetrics transactionsMetrics);
+
+    _FinalStage balancesMetrics(Optional<RiskInsightsBalanceMetrics> balancesMetrics);
+
+    _FinalStage balancesMetrics(RiskInsightsBalanceMetrics balancesMetrics);
+
+    _FinalStage cashflowMetrics(Optional<RiskInsightsCashflowMetrics> cashflowMetrics);
+
+    _FinalStage cashflowMetrics(RiskInsightsCashflowMetrics cashflowMetrics);
+
+    _FinalStage creditCardsMetrics(Optional<RiskInsightsCreditCardMetrics> creditCardsMetrics);
+
+    _FinalStage creditCardsMetrics(RiskInsightsCreditCardMetrics creditCardsMetrics);
+
+    _FinalStage loansMetrics(Optional<RiskInsightsLoansMetrics> loansMetrics);
+
+    _FinalStage loansMetrics(RiskInsightsLoansMetrics loansMetrics);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, TransactionsMetricsStage, BalancesMetricsStage, CashflowMetricsStage, CreditCardsMetricsStage, LoansMetricsStage, _FinalStage {
+  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, _FinalStage {
     private String id;
 
     private String link;
 
     private String createdAt;
 
-    private RiskInsightsTransactionMetrics transactionsMetrics;
+    private Optional<RiskInsightsLoansMetrics> loansMetrics = Optional.empty();
 
-    private RiskInsightsBalanceMetrics balancesMetrics;
+    private Optional<RiskInsightsCreditCardMetrics> creditCardsMetrics = Optional.empty();
 
-    private RiskInsightsCashflowMetrics cashflowMetrics;
+    private Optional<RiskInsightsCashflowMetrics> cashflowMetrics = Optional.empty();
 
-    private RiskInsightsCreditCardMetrics creditCardsMetrics;
+    private Optional<RiskInsightsBalanceMetrics> balancesMetrics = Optional.empty();
 
-    private RiskInsightsLoansMetrics loansMetrics;
+    private Optional<RiskInsightsTransactionMetrics> transactionsMetrics = Optional.empty();
 
     private Optional<List<String>> accounts = Optional.empty();
 
@@ -244,44 +246,90 @@ public final class RiskInsights {
      */
     @Override
     @JsonSetter("created_at")
-    public TransactionsMetricsStage createdAt(String createdAt) {
+    public _FinalStage createdAt(String createdAt) {
       this.createdAt = createdAt;
       return this;
     }
 
     @Override
-    @JsonSetter("transactions_metrics")
-    public BalancesMetricsStage transactionsMetrics(
-        RiskInsightsTransactionMetrics transactionsMetrics) {
-      this.transactionsMetrics = transactionsMetrics;
+    public _FinalStage loansMetrics(RiskInsightsLoansMetrics loansMetrics) {
+      this.loansMetrics = Optional.of(loansMetrics);
       return this;
     }
 
     @Override
-    @JsonSetter("balances_metrics")
-    public CashflowMetricsStage balancesMetrics(RiskInsightsBalanceMetrics balancesMetrics) {
-      this.balancesMetrics = balancesMetrics;
+    @JsonSetter(
+        value = "loans_metrics",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage loansMetrics(Optional<RiskInsightsLoansMetrics> loansMetrics) {
+      this.loansMetrics = loansMetrics;
       return this;
     }
 
     @Override
-    @JsonSetter("cashflow_metrics")
-    public CreditCardsMetricsStage cashflowMetrics(RiskInsightsCashflowMetrics cashflowMetrics) {
-      this.cashflowMetrics = cashflowMetrics;
+    public _FinalStage creditCardsMetrics(RiskInsightsCreditCardMetrics creditCardsMetrics) {
+      this.creditCardsMetrics = Optional.of(creditCardsMetrics);
       return this;
     }
 
     @Override
-    @JsonSetter("credit_cards_metrics")
-    public LoansMetricsStage creditCardsMetrics(RiskInsightsCreditCardMetrics creditCardsMetrics) {
+    @JsonSetter(
+        value = "credit_cards_metrics",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage creditCardsMetrics(
+        Optional<RiskInsightsCreditCardMetrics> creditCardsMetrics) {
       this.creditCardsMetrics = creditCardsMetrics;
       return this;
     }
 
     @Override
-    @JsonSetter("loans_metrics")
-    public _FinalStage loansMetrics(RiskInsightsLoansMetrics loansMetrics) {
-      this.loansMetrics = loansMetrics;
+    public _FinalStage cashflowMetrics(RiskInsightsCashflowMetrics cashflowMetrics) {
+      this.cashflowMetrics = Optional.of(cashflowMetrics);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "cashflow_metrics",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage cashflowMetrics(Optional<RiskInsightsCashflowMetrics> cashflowMetrics) {
+      this.cashflowMetrics = cashflowMetrics;
+      return this;
+    }
+
+    @Override
+    public _FinalStage balancesMetrics(RiskInsightsBalanceMetrics balancesMetrics) {
+      this.balancesMetrics = Optional.of(balancesMetrics);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "balances_metrics",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage balancesMetrics(Optional<RiskInsightsBalanceMetrics> balancesMetrics) {
+      this.balancesMetrics = balancesMetrics;
+      return this;
+    }
+
+    @Override
+    public _FinalStage transactionsMetrics(RiskInsightsTransactionMetrics transactionsMetrics) {
+      this.transactionsMetrics = Optional.of(transactionsMetrics);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "transactions_metrics",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage transactionsMetrics(
+        Optional<RiskInsightsTransactionMetrics> transactionsMetrics) {
+      this.transactionsMetrics = transactionsMetrics;
       return this;
     }
 

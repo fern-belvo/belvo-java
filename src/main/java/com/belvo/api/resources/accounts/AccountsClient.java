@@ -8,15 +8,16 @@ import com.belvo.api.types.Account;
 import com.belvo.api.types.AccountsPaginatedResponse;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountsClient {
   AccountsPaginatedResponse listAccounts(ListAccountsRequest request);
 
-  List<Account> retrieveAccounts(RetrieveAccountsRequest request);
+  List<Optional<Account>> retrieveAccounts(RetrieveAccountsRequest request);
 
-  List<Account> patchAccounts(PatchAccountsRequest request);
+  List<Optional<Account>> patchAccounts(PatchAccountsRequest request);
 
-  Account detailAccount(String id, DetailAccountRequest request);
+  Optional<Account> detailAccount(String id, DetailAccountRequest request);
 
   void destroyAccount(String id);
 }

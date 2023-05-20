@@ -3,11 +3,13 @@ package com.belvo.api.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonDeserialize(
     builder = EyodIncomeVerificationBodyRequest.Builder.class
@@ -27,7 +29,7 @@ public final class EyodIncomeVerificationBodyRequest {
 
   private final String description;
 
-  private final EnumIncomeVerificationType type;
+  private final Optional<EnumIncomeVerificationType> type;
 
   private final double amount;
 
@@ -40,7 +42,7 @@ public final class EyodIncomeVerificationBodyRequest {
   EyodIncomeVerificationBodyRequest(String transactionId,
       EnumIncomeVerificationAccountHolderType accountHolderType, String accountHolderId,
       String accountId, EnumIncomeVerificationAccountCategory accountCategory, String valueDate,
-      String description, EnumIncomeVerificationType type, double amount, String currency,
+      String description, Optional<EnumIncomeVerificationType> type, double amount, String currency,
       String institution) {
     this.transactionId = transactionId;
     this.accountHolderType = accountHolderType;
@@ -106,7 +108,7 @@ public final class EyodIncomeVerificationBodyRequest {
   }
 
   @JsonProperty("type")
-  public EnumIncomeVerificationType getType() {
+  public Optional<EnumIncomeVerificationType> getType() {
     return type;
   }
 
@@ -193,11 +195,7 @@ public final class EyodIncomeVerificationBodyRequest {
   }
 
   public interface DescriptionStage {
-    TypeStage description(String description);
-  }
-
-  public interface TypeStage {
-    AmountStage type(EnumIncomeVerificationType type);
+    AmountStage description(String description);
   }
 
   public interface AmountStage {
@@ -214,12 +212,16 @@ public final class EyodIncomeVerificationBodyRequest {
 
   public interface _FinalStage {
     EyodIncomeVerificationBodyRequest build();
+
+    _FinalStage type(Optional<EnumIncomeVerificationType> type);
+
+    _FinalStage type(EnumIncomeVerificationType type);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TransactionIdStage, AccountHolderTypeStage, AccountHolderIdStage, AccountIdStage, AccountCategoryStage, ValueDateStage, DescriptionStage, TypeStage, AmountStage, CurrencyStage, InstitutionStage, _FinalStage {
+  public static final class Builder implements TransactionIdStage, AccountHolderTypeStage, AccountHolderIdStage, AccountIdStage, AccountCategoryStage, ValueDateStage, DescriptionStage, AmountStage, CurrencyStage, InstitutionStage, _FinalStage {
     private String transactionId;
 
     private EnumIncomeVerificationAccountHolderType accountHolderType;
@@ -234,13 +236,13 @@ public final class EyodIncomeVerificationBodyRequest {
 
     private String description;
 
-    private EnumIncomeVerificationType type;
-
     private double amount;
 
     private String currency;
 
     private String institution;
+
+    private Optional<EnumIncomeVerificationType> type = Optional.empty();
 
     private Builder() {
     }
@@ -326,15 +328,8 @@ public final class EyodIncomeVerificationBodyRequest {
      */
     @Override
     @JsonSetter("description")
-    public TypeStage description(String description) {
+    public AmountStage description(String description) {
       this.description = description;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("type")
-    public AmountStage type(EnumIncomeVerificationType type) {
-      this.type = type;
       return this;
     }
 
@@ -372,6 +367,22 @@ public final class EyodIncomeVerificationBodyRequest {
     @JsonSetter("institution")
     public _FinalStage institution(String institution) {
       this.institution = institution;
+      return this;
+    }
+
+    @Override
+    public _FinalStage type(EnumIncomeVerificationType type) {
+      this.type = Optional.of(type);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "type",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage type(Optional<EnumIncomeVerificationType> type) {
+      this.type = type;
       return this;
     }
 

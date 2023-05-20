@@ -20,7 +20,7 @@ public final class Transaction {
 
   private final Optional<String> internalIdentification;
 
-  private final Account account;
+  private final Optional<Account> account;
 
   private final Optional<String> collectedAt;
 
@@ -40,7 +40,7 @@ public final class Transaction {
 
   private final Optional<String> observations;
 
-  private final TransactionMerchantData merchant;
+  private final Optional<TransactionMerchantData> merchant;
 
   private final Optional<String> category;
 
@@ -56,12 +56,13 @@ public final class Transaction {
 
   private int _cachedHashCode;
 
-  Transaction(Optional<String> id, Optional<String> internalIdentification, Account account,
-      Optional<String> collectedAt, Optional<String> createdAt, Optional<String> valueDate,
-      Optional<String> accountingDate, Optional<Double> amount, Optional<Double> balance,
-      Optional<String> currency, Optional<String> description, Optional<String> observations,
-      TransactionMerchantData merchant, Optional<String> category, Optional<String> subcategory,
-      Optional<String> reference, Optional<String> type, Optional<String> status,
+  Transaction(Optional<String> id, Optional<String> internalIdentification,
+      Optional<Account> account, Optional<String> collectedAt, Optional<String> createdAt,
+      Optional<String> valueDate, Optional<String> accountingDate, Optional<Double> amount,
+      Optional<Double> balance, Optional<String> currency, Optional<String> description,
+      Optional<String> observations, Optional<TransactionMerchantData> merchant,
+      Optional<String> category, Optional<String> subcategory, Optional<String> reference,
+      Optional<String> type, Optional<String> status,
       Optional<TransactionCreditCardData> creditCardData) {
     this.id = id;
     this.internalIdentification = internalIdentification;
@@ -101,7 +102,7 @@ public final class Transaction {
   }
 
   @JsonProperty("account")
-  public Account getAccount() {
+  public Optional<Account> getAccount() {
     return account;
   }
 
@@ -179,7 +180,7 @@ public final class Transaction {
   }
 
   @JsonProperty("merchant")
-  public TransactionMerchantData getMerchant() {
+  public Optional<TransactionMerchantData> getMerchant() {
     return merchant;
   }
 
@@ -239,138 +240,55 @@ public final class Transaction {
     return "Transaction{" + "id: " + id + ", internalIdentification: " + internalIdentification + ", account: " + account + ", collectedAt: " + collectedAt + ", createdAt: " + createdAt + ", valueDate: " + valueDate + ", accountingDate: " + accountingDate + ", amount: " + amount + ", balance: " + balance + ", currency: " + currency + ", description: " + description + ", observations: " + observations + ", merchant: " + merchant + ", category: " + category + ", subcategory: " + subcategory + ", reference: " + reference + ", type: " + type + ", status: " + status + ", creditCardData: " + creditCardData + "}";
   }
 
-  public static AccountStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface AccountStage {
-    MerchantStage account(Account account);
-
-    Builder from(Transaction other);
-  }
-
-  public interface MerchantStage {
-    _FinalStage merchant(TransactionMerchantData merchant);
-  }
-
-  public interface _FinalStage {
-    Transaction build();
-
-    _FinalStage id(Optional<String> id);
-
-    _FinalStage id(String id);
-
-    _FinalStage internalIdentification(Optional<String> internalIdentification);
-
-    _FinalStage internalIdentification(String internalIdentification);
-
-    _FinalStage collectedAt(Optional<String> collectedAt);
-
-    _FinalStage collectedAt(String collectedAt);
-
-    _FinalStage createdAt(Optional<String> createdAt);
-
-    _FinalStage createdAt(String createdAt);
-
-    _FinalStage valueDate(Optional<String> valueDate);
-
-    _FinalStage valueDate(String valueDate);
-
-    _FinalStage accountingDate(Optional<String> accountingDate);
-
-    _FinalStage accountingDate(String accountingDate);
-
-    _FinalStage amount(Optional<Double> amount);
-
-    _FinalStage amount(Double amount);
-
-    _FinalStage balance(Optional<Double> balance);
-
-    _FinalStage balance(Double balance);
-
-    _FinalStage currency(Optional<String> currency);
-
-    _FinalStage currency(String currency);
-
-    _FinalStage description(Optional<String> description);
-
-    _FinalStage description(String description);
-
-    _FinalStage observations(Optional<String> observations);
-
-    _FinalStage observations(String observations);
-
-    _FinalStage category(Optional<String> category);
-
-    _FinalStage category(String category);
-
-    _FinalStage subcategory(Optional<String> subcategory);
-
-    _FinalStage subcategory(String subcategory);
-
-    _FinalStage reference(Optional<String> reference);
-
-    _FinalStage reference(String reference);
-
-    _FinalStage type(Optional<String> type);
-
-    _FinalStage type(String type);
-
-    _FinalStage status(Optional<String> status);
-
-    _FinalStage status(String status);
-
-    _FinalStage creditCardData(Optional<TransactionCreditCardData> creditCardData);
-
-    _FinalStage creditCardData(TransactionCreditCardData creditCardData);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements AccountStage, MerchantStage, _FinalStage {
-    private Account account;
-
-    private TransactionMerchantData merchant;
-
-    private Optional<TransactionCreditCardData> creditCardData = Optional.empty();
-
-    private Optional<String> status = Optional.empty();
-
-    private Optional<String> type = Optional.empty();
-
-    private Optional<String> reference = Optional.empty();
-
-    private Optional<String> subcategory = Optional.empty();
-
-    private Optional<String> category = Optional.empty();
-
-    private Optional<String> observations = Optional.empty();
-
-    private Optional<String> description = Optional.empty();
-
-    private Optional<String> currency = Optional.empty();
-
-    private Optional<Double> balance = Optional.empty();
-
-    private Optional<Double> amount = Optional.empty();
-
-    private Optional<String> accountingDate = Optional.empty();
-
-    private Optional<String> valueDate = Optional.empty();
-
-    private Optional<String> createdAt = Optional.empty();
-
-    private Optional<String> collectedAt = Optional.empty();
+  public static final class Builder {
+    private Optional<String> id = Optional.empty();
 
     private Optional<String> internalIdentification = Optional.empty();
 
-    private Optional<String> id = Optional.empty();
+    private Optional<Account> account = Optional.empty();
+
+    private Optional<String> collectedAt = Optional.empty();
+
+    private Optional<String> createdAt = Optional.empty();
+
+    private Optional<String> valueDate = Optional.empty();
+
+    private Optional<String> accountingDate = Optional.empty();
+
+    private Optional<Double> amount = Optional.empty();
+
+    private Optional<Double> balance = Optional.empty();
+
+    private Optional<String> currency = Optional.empty();
+
+    private Optional<String> description = Optional.empty();
+
+    private Optional<String> observations = Optional.empty();
+
+    private Optional<TransactionMerchantData> merchant = Optional.empty();
+
+    private Optional<String> category = Optional.empty();
+
+    private Optional<String> subcategory = Optional.empty();
+
+    private Optional<String> reference = Optional.empty();
+
+    private Optional<String> type = Optional.empty();
+
+    private Optional<String> status = Optional.empty();
+
+    private Optional<TransactionCreditCardData> creditCardData = Optional.empty();
 
     private Builder() {
     }
 
-    @Override
     public Builder from(Transaction other) {
       id(other.getId());
       internalIdentification(other.getInternalIdentification());
@@ -394,342 +312,272 @@ public final class Transaction {
       return this;
     }
 
-    @Override
-    @JsonSetter("account")
-    public MerchantStage account(Account account) {
-      this.account = account;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("merchant")
-    public _FinalStage merchant(TransactionMerchantData merchant) {
-      this.merchant = merchant;
-      return this;
-    }
-
-    @Override
-    public _FinalStage creditCardData(TransactionCreditCardData creditCardData) {
-      this.creditCardData = Optional.of(creditCardData);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "credit_card_data",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage creditCardData(Optional<TransactionCreditCardData> creditCardData) {
-      this.creditCardData = creditCardData;
-      return this;
-    }
-
-    @Override
-    public _FinalStage status(String status) {
-      this.status = Optional.of(status);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "status",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage status(Optional<String> status) {
-      this.status = status;
-      return this;
-    }
-
-    @Override
-    public _FinalStage type(String type) {
-      this.type = Optional.of(type);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "type",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage type(Optional<String> type) {
-      this.type = type;
-      return this;
-    }
-
-    /**
-     * <p>The reference number of the transaction, provided by the bank.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage reference(String reference) {
-      this.reference = Optional.of(reference);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "reference",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage reference(Optional<String> reference) {
-      this.reference = reference;
-      return this;
-    }
-
-    @Override
-    public _FinalStage subcategory(String subcategory) {
-      this.subcategory = Optional.of(subcategory);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "subcategory",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage subcategory(Optional<String> subcategory) {
-      this.subcategory = subcategory;
-      return this;
-    }
-
-    @Override
-    public _FinalStage category(String category) {
-      this.category = Optional.of(category);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "category",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage category(Optional<String> category) {
-      this.category = category;
-      return this;
-    }
-
-    /**
-     * <p>Additional observations provided by the institution on the transaction.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage observations(String observations) {
-      this.observations = Optional.of(observations);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "observations",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage observations(Optional<String> observations) {
-      this.observations = observations;
-      return this;
-    }
-
-    /**
-     * <p>The description of transaction provided by the institution. Usually this is the text that the end user sees in the online platform.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage description(String description) {
-      this.description = Optional.of(description);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "description",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage description(Optional<String> description) {
-      this.description = description;
-      return this;
-    }
-
-    /**
-     * <p>The three-letter currency code (ISO-4217).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage currency(String currency) {
-      this.currency = Optional.of(currency);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "currency",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage currency(Optional<String> currency) {
-      this.currency = currency;
-      return this;
-    }
-
-    /**
-     * <p>The balance at the end of the transaction.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage balance(Double balance) {
-      this.balance = Optional.of(balance);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "balance",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage balance(Optional<Double> balance) {
-      this.balance = balance;
-      return this;
-    }
-
-    /**
-     * <p>The transaction amount.
-     * ℹ️ The amount displayed is always positive as we indicate the direction of the transaction in the <code>type</code> parameter.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage amount(Double amount) {
-      this.amount = Optional.of(amount);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "amount",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage amount(Optional<Double> amount) {
-      this.amount = amount;
-      return this;
-    }
-
-    /**
-     * <p>The ISO timestamp when the transaction was processed and accounted for by the institution.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage accountingDate(String accountingDate) {
-      this.accountingDate = Optional.of(accountingDate);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "accounting_date",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage accountingDate(Optional<String> accountingDate) {
-      this.accountingDate = accountingDate;
-      return this;
-    }
-
-    /**
-     * <p>The date when the transaction occurred, in <code>YYYY-MM-DD</code> format.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage valueDate(String valueDate) {
-      this.valueDate = Optional.of(valueDate);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "value_date",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage valueDate(Optional<String> valueDate) {
-      this.valueDate = valueDate;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the data point was last updated in Belvo's database.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage createdAt(String createdAt) {
-      this.createdAt = Optional.of(createdAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "created_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage createdAt(Optional<String> createdAt) {
-      this.createdAt = createdAt;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp when the data point was collected.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage collectedAt(String collectedAt) {
-      this.collectedAt = Optional.of(collectedAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "collected_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage collectedAt(Optional<String> collectedAt) {
-      this.collectedAt = collectedAt;
-      return this;
-    }
-
-    /**
-     * <p>The institution's internal identification for the transaction.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage internalIdentification(String internalIdentification) {
-      this.internalIdentification = Optional.of(internalIdentification);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "internal_identification",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage internalIdentification(Optional<String> internalIdentification) {
-      this.internalIdentification = internalIdentification;
-      return this;
-    }
-
-    /**
-     * <p>Belvo's unique ID for the transaction.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage id(String id) {
-      this.id = Optional.of(id);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
         value = "id",
         nulls = Nulls.SKIP
     )
-    public _FinalStage id(Optional<String> id) {
+    public Builder id(Optional<String> id) {
       this.id = id;
       return this;
     }
 
-    @Override
+    public Builder id(String id) {
+      this.id = Optional.of(id);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "internal_identification",
+        nulls = Nulls.SKIP
+    )
+    public Builder internalIdentification(Optional<String> internalIdentification) {
+      this.internalIdentification = internalIdentification;
+      return this;
+    }
+
+    public Builder internalIdentification(String internalIdentification) {
+      this.internalIdentification = Optional.of(internalIdentification);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "account",
+        nulls = Nulls.SKIP
+    )
+    public Builder account(Optional<Account> account) {
+      this.account = account;
+      return this;
+    }
+
+    public Builder account(Account account) {
+      this.account = Optional.of(account);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "collected_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder collectedAt(Optional<String> collectedAt) {
+      this.collectedAt = collectedAt;
+      return this;
+    }
+
+    public Builder collectedAt(String collectedAt) {
+      this.collectedAt = Optional.of(collectedAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "created_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder createdAt(Optional<String> createdAt) {
+      this.createdAt = createdAt;
+      return this;
+    }
+
+    public Builder createdAt(String createdAt) {
+      this.createdAt = Optional.of(createdAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "value_date",
+        nulls = Nulls.SKIP
+    )
+    public Builder valueDate(Optional<String> valueDate) {
+      this.valueDate = valueDate;
+      return this;
+    }
+
+    public Builder valueDate(String valueDate) {
+      this.valueDate = Optional.of(valueDate);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "accounting_date",
+        nulls = Nulls.SKIP
+    )
+    public Builder accountingDate(Optional<String> accountingDate) {
+      this.accountingDate = accountingDate;
+      return this;
+    }
+
+    public Builder accountingDate(String accountingDate) {
+      this.accountingDate = Optional.of(accountingDate);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "amount",
+        nulls = Nulls.SKIP
+    )
+    public Builder amount(Optional<Double> amount) {
+      this.amount = amount;
+      return this;
+    }
+
+    public Builder amount(Double amount) {
+      this.amount = Optional.of(amount);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "balance",
+        nulls = Nulls.SKIP
+    )
+    public Builder balance(Optional<Double> balance) {
+      this.balance = balance;
+      return this;
+    }
+
+    public Builder balance(Double balance) {
+      this.balance = Optional.of(balance);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "currency",
+        nulls = Nulls.SKIP
+    )
+    public Builder currency(Optional<String> currency) {
+      this.currency = currency;
+      return this;
+    }
+
+    public Builder currency(String currency) {
+      this.currency = Optional.of(currency);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "description",
+        nulls = Nulls.SKIP
+    )
+    public Builder description(Optional<String> description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = Optional.of(description);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "observations",
+        nulls = Nulls.SKIP
+    )
+    public Builder observations(Optional<String> observations) {
+      this.observations = observations;
+      return this;
+    }
+
+    public Builder observations(String observations) {
+      this.observations = Optional.of(observations);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "merchant",
+        nulls = Nulls.SKIP
+    )
+    public Builder merchant(Optional<TransactionMerchantData> merchant) {
+      this.merchant = merchant;
+      return this;
+    }
+
+    public Builder merchant(TransactionMerchantData merchant) {
+      this.merchant = Optional.of(merchant);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "category",
+        nulls = Nulls.SKIP
+    )
+    public Builder category(Optional<String> category) {
+      this.category = category;
+      return this;
+    }
+
+    public Builder category(String category) {
+      this.category = Optional.of(category);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "subcategory",
+        nulls = Nulls.SKIP
+    )
+    public Builder subcategory(Optional<String> subcategory) {
+      this.subcategory = subcategory;
+      return this;
+    }
+
+    public Builder subcategory(String subcategory) {
+      this.subcategory = Optional.of(subcategory);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "reference",
+        nulls = Nulls.SKIP
+    )
+    public Builder reference(Optional<String> reference) {
+      this.reference = reference;
+      return this;
+    }
+
+    public Builder reference(String reference) {
+      this.reference = Optional.of(reference);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "type",
+        nulls = Nulls.SKIP
+    )
+    public Builder type(Optional<String> type) {
+      this.type = type;
+      return this;
+    }
+
+    public Builder type(String type) {
+      this.type = Optional.of(type);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "status",
+        nulls = Nulls.SKIP
+    )
+    public Builder status(Optional<String> status) {
+      this.status = status;
+      return this;
+    }
+
+    public Builder status(String status) {
+      this.status = Optional.of(status);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "credit_card_data",
+        nulls = Nulls.SKIP
+    )
+    public Builder creditCardData(Optional<TransactionCreditCardData> creditCardData) {
+      this.creditCardData = creditCardData;
+      return this;
+    }
+
+    public Builder creditCardData(TransactionCreditCardData creditCardData) {
+      this.creditCardData = Optional.of(creditCardData);
+      return this;
+    }
+
     public Transaction build() {
       return new Transaction(id, internalIdentification, account, collectedAt, createdAt, valueDate, accountingDate, amount, balance, currency, description, observations, merchant, category, subcategory, reference, type, status, creditCardData);
     }

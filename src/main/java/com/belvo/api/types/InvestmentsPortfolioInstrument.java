@@ -43,11 +43,11 @@ public final class InvestmentsPortfolioInstrument {
 
   private final Optional<String> openDate;
 
-  private final Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions;
+  private final Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> redemptionConditions;
 
-  private final Optional<List<InvestmentsPortfolioInstrumentFees>> fees;
+  private final Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> fees;
 
-  private final Optional<List<InvestmentsPortfolioInstrumentInterestRate>> interestRates;
+  private final Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> interestRates;
 
   private int _cachedHashCode;
 
@@ -57,9 +57,9 @@ public final class InvestmentsPortfolioInstrument {
       String currency, Optional<Double> price, Optional<Double> quantity,
       Optional<Double> balanceGross, Optional<Double> balanceNet,
       Optional<Double> averageAcquisitionPrice, Optional<Double> profit, Optional<String> openDate,
-      Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions,
-      Optional<List<InvestmentsPortfolioInstrumentFees>> fees,
-      Optional<List<InvestmentsPortfolioInstrumentInterestRate>> interestRates) {
+      Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> redemptionConditions,
+      Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> fees,
+      Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> interestRates) {
     this.id = id;
     this.publicId = publicId;
     this.type = type;
@@ -191,7 +191,7 @@ public final class InvestmentsPortfolioInstrument {
    * <p>For example, the due date, the liquidity date, the previdencia type, and so on.</p>
    */
   @JsonProperty("redemption_conditions")
-  public Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> getRedemptionConditions(
+  public Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> getRedemptionConditions(
       ) {
     return redemptionConditions;
   }
@@ -200,7 +200,7 @@ public final class InvestmentsPortfolioInstrument {
    * @return An array of fees that apply to the instrument.
    */
   @JsonProperty("fees")
-  public Optional<List<InvestmentsPortfolioInstrumentFees>> getFees() {
+  public Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> getFees() {
     return fees;
   }
 
@@ -208,7 +208,7 @@ public final class InvestmentsPortfolioInstrument {
    * @return An array of interest rates that apply to the instrument.
    */
   @JsonProperty("interest_rates")
-  public Optional<List<InvestmentsPortfolioInstrumentInterestRate>> getInterestRates() {
+  public Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> getInterestRates() {
     return interestRates;
   }
 
@@ -297,19 +297,20 @@ public final class InvestmentsPortfolioInstrument {
     _FinalStage openDate(String openDate);
 
     _FinalStage redemptionConditions(
-        Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions);
+        Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> redemptionConditions);
 
     _FinalStage redemptionConditions(
-        List<InvestmentsPortfolioInstrumentRedemptionConditions> redemptionConditions);
+        List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions);
 
-    _FinalStage fees(Optional<List<InvestmentsPortfolioInstrumentFees>> fees);
+    _FinalStage fees(Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> fees);
 
-    _FinalStage fees(List<InvestmentsPortfolioInstrumentFees> fees);
+    _FinalStage fees(List<Optional<InvestmentsPortfolioInstrumentFees>> fees);
 
     _FinalStage interestRates(
-        Optional<List<InvestmentsPortfolioInstrumentInterestRate>> interestRates);
+        Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> interestRates);
 
-    _FinalStage interestRates(List<InvestmentsPortfolioInstrumentInterestRate> interestRates);
+    _FinalStage interestRates(
+        List<Optional<InvestmentsPortfolioInstrumentInterestRate>> interestRates);
   }
 
   @JsonIgnoreProperties(
@@ -322,11 +323,11 @@ public final class InvestmentsPortfolioInstrument {
 
     private String currency;
 
-    private Optional<List<InvestmentsPortfolioInstrumentInterestRate>> interestRates = Optional.empty();
+    private Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> interestRates = Optional.empty();
 
-    private Optional<List<InvestmentsPortfolioInstrumentFees>> fees = Optional.empty();
+    private Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> fees = Optional.empty();
 
-    private Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions = Optional.empty();
+    private Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> redemptionConditions = Optional.empty();
 
     private Optional<String> openDate = Optional.empty();
 
@@ -414,7 +415,7 @@ public final class InvestmentsPortfolioInstrument {
      */
     @Override
     public _FinalStage interestRates(
-        List<InvestmentsPortfolioInstrumentInterestRate> interestRates) {
+        List<Optional<InvestmentsPortfolioInstrumentInterestRate>> interestRates) {
       this.interestRates = Optional.of(interestRates);
       return this;
     }
@@ -425,7 +426,7 @@ public final class InvestmentsPortfolioInstrument {
         nulls = Nulls.SKIP
     )
     public _FinalStage interestRates(
-        Optional<List<InvestmentsPortfolioInstrumentInterestRate>> interestRates) {
+        Optional<List<Optional<InvestmentsPortfolioInstrumentInterestRate>>> interestRates) {
       this.interestRates = interestRates;
       return this;
     }
@@ -435,7 +436,7 @@ public final class InvestmentsPortfolioInstrument {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage fees(List<InvestmentsPortfolioInstrumentFees> fees) {
+    public _FinalStage fees(List<Optional<InvestmentsPortfolioInstrumentFees>> fees) {
       this.fees = Optional.of(fees);
       return this;
     }
@@ -445,7 +446,7 @@ public final class InvestmentsPortfolioInstrument {
         value = "fees",
         nulls = Nulls.SKIP
     )
-    public _FinalStage fees(Optional<List<InvestmentsPortfolioInstrumentFees>> fees) {
+    public _FinalStage fees(Optional<List<Optional<InvestmentsPortfolioInstrumentFees>>> fees) {
       this.fees = fees;
       return this;
     }
@@ -457,7 +458,7 @@ public final class InvestmentsPortfolioInstrument {
      */
     @Override
     public _FinalStage redemptionConditions(
-        List<InvestmentsPortfolioInstrumentRedemptionConditions> redemptionConditions) {
+        List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions) {
       this.redemptionConditions = Optional.of(redemptionConditions);
       return this;
     }
@@ -468,7 +469,7 @@ public final class InvestmentsPortfolioInstrument {
         nulls = Nulls.SKIP
     )
     public _FinalStage redemptionConditions(
-        Optional<List<InvestmentsPortfolioInstrumentRedemptionConditions>> redemptionConditions) {
+        Optional<List<Optional<InvestmentsPortfolioInstrumentRedemptionConditions>>> redemptionConditions) {
       this.redemptionConditions = redemptionConditions;
       return this;
     }

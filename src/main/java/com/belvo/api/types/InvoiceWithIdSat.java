@@ -32,7 +32,7 @@ public final class InvoiceWithIdSat {
 
   private final Optional<String> status;
 
-  private final EnumInvoiceSatInvoiceType invoiceType;
+  private final Optional<EnumInvoiceSatInvoiceType> invoiceType;
 
   private final Optional<String> type;
 
@@ -86,7 +86,7 @@ public final class InvoiceWithIdSat {
 
   private final List<InvoicesPaymentsSat> payments;
 
-  private final InvoicesPayrollSat payroll;
+  private final Optional<InvoicesPayrollSat> payroll;
 
   private final Optional<String> folio;
 
@@ -102,20 +102,20 @@ public final class InvoiceWithIdSat {
 
   InvoiceWithIdSat(Optional<String> id, Optional<String> link, Optional<String> collectedAt,
       Optional<String> createdAt, Optional<String> invoiceIdentification,
-      Optional<String> invoiceDate, Optional<String> status, EnumInvoiceSatInvoiceType invoiceType,
-      Optional<String> type, Optional<String> senderId, Optional<String> senderName,
-      Optional<String> senderTaxFraudStatus, Optional<String> receiverId,
-      Optional<String> receiverName, Optional<String> receiverTaxFraudStatus,
-      Optional<String> cancelationStatus, Optional<String> cancelationUpdateDate,
-      Optional<String> certificationDate, Optional<String> certificationAuthority,
-      Optional<String> paymentType, Optional<String> paymentTypeDescription,
-      Optional<String> paymentMethod, Optional<String> paymentMethodDescription,
-      Optional<String> usage, Optional<String> version, Optional<String> placeOfIssue,
-      List<InvoiceDetailSat> invoiceDetails, Optional<String> currency,
-      Optional<Double> subtotalAmount, Optional<Double> exchangeRate, Optional<Double> taxAmount,
-      Optional<Double> discountAmount, Optional<Double> totalAmount,
-      List<InvoicesPaymentsSat> payments, InvoicesPayrollSat payroll, Optional<String> folio,
-      Optional<String> xml, Optional<InvoiceWarningsSat> warnings,
+      Optional<String> invoiceDate, Optional<String> status,
+      Optional<EnumInvoiceSatInvoiceType> invoiceType, Optional<String> type,
+      Optional<String> senderId, Optional<String> senderName, Optional<String> senderTaxFraudStatus,
+      Optional<String> receiverId, Optional<String> receiverName,
+      Optional<String> receiverTaxFraudStatus, Optional<String> cancelationStatus,
+      Optional<String> cancelationUpdateDate, Optional<String> certificationDate,
+      Optional<String> certificationAuthority, Optional<String> paymentType,
+      Optional<String> paymentTypeDescription, Optional<String> paymentMethod,
+      Optional<String> paymentMethodDescription, Optional<String> usage, Optional<String> version,
+      Optional<String> placeOfIssue, List<InvoiceDetailSat> invoiceDetails,
+      Optional<String> currency, Optional<Double> subtotalAmount, Optional<Double> exchangeRate,
+      Optional<Double> taxAmount, Optional<Double> discountAmount, Optional<Double> totalAmount,
+      List<InvoicesPaymentsSat> payments, Optional<InvoicesPayrollSat> payroll,
+      Optional<String> folio, Optional<String> xml, Optional<InvoiceWarningsSat> warnings,
       Optional<String> senderBlacklistStatus, Optional<String> receiverBlacklistStatus) {
     this.id = id;
     this.link = link;
@@ -216,7 +216,7 @@ public final class InvoiceWithIdSat {
   }
 
   @JsonProperty("invoice_type")
-  public EnumInvoiceSatInvoiceType getInvoiceType() {
+  public Optional<EnumInvoiceSatInvoiceType> getInvoiceType() {
     return invoiceType;
   }
 
@@ -448,7 +448,7 @@ public final class InvoiceWithIdSat {
   }
 
   @JsonProperty("payroll")
-  public InvoicesPayrollSat getPayroll() {
+  public Optional<InvoicesPayrollSat> getPayroll() {
     return payroll;
   }
 
@@ -512,268 +512,97 @@ public final class InvoiceWithIdSat {
     return "InvoiceWithIdSat{" + "id: " + id + ", link: " + link + ", collectedAt: " + collectedAt + ", createdAt: " + createdAt + ", invoiceIdentification: " + invoiceIdentification + ", invoiceDate: " + invoiceDate + ", status: " + status + ", invoiceType: " + invoiceType + ", type: " + type + ", senderId: " + senderId + ", senderName: " + senderName + ", senderTaxFraudStatus: " + senderTaxFraudStatus + ", receiverId: " + receiverId + ", receiverName: " + receiverName + ", receiverTaxFraudStatus: " + receiverTaxFraudStatus + ", cancelationStatus: " + cancelationStatus + ", cancelationUpdateDate: " + cancelationUpdateDate + ", certificationDate: " + certificationDate + ", certificationAuthority: " + certificationAuthority + ", paymentType: " + paymentType + ", paymentTypeDescription: " + paymentTypeDescription + ", paymentMethod: " + paymentMethod + ", paymentMethodDescription: " + paymentMethodDescription + ", usage: " + usage + ", version: " + version + ", placeOfIssue: " + placeOfIssue + ", invoiceDetails: " + invoiceDetails + ", currency: " + currency + ", subtotalAmount: " + subtotalAmount + ", exchangeRate: " + exchangeRate + ", taxAmount: " + taxAmount + ", discountAmount: " + discountAmount + ", totalAmount: " + totalAmount + ", payments: " + payments + ", payroll: " + payroll + ", folio: " + folio + ", xml: " + xml + ", warnings: " + warnings + ", senderBlacklistStatus: " + senderBlacklistStatus + ", receiverBlacklistStatus: " + receiverBlacklistStatus + "}";
   }
 
-  public static InvoiceTypeStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface InvoiceTypeStage {
-    PayrollStage invoiceType(EnumInvoiceSatInvoiceType invoiceType);
-
-    Builder from(InvoiceWithIdSat other);
-  }
-
-  public interface PayrollStage {
-    _FinalStage payroll(InvoicesPayrollSat payroll);
-  }
-
-  public interface _FinalStage {
-    InvoiceWithIdSat build();
-
-    _FinalStage id(Optional<String> id);
-
-    _FinalStage id(String id);
-
-    _FinalStage link(Optional<String> link);
-
-    _FinalStage link(String link);
-
-    _FinalStage collectedAt(Optional<String> collectedAt);
-
-    _FinalStage collectedAt(String collectedAt);
-
-    _FinalStage createdAt(Optional<String> createdAt);
-
-    _FinalStage createdAt(String createdAt);
-
-    _FinalStage invoiceIdentification(Optional<String> invoiceIdentification);
-
-    _FinalStage invoiceIdentification(String invoiceIdentification);
-
-    _FinalStage invoiceDate(Optional<String> invoiceDate);
-
-    _FinalStage invoiceDate(String invoiceDate);
-
-    _FinalStage status(Optional<String> status);
-
-    _FinalStage status(String status);
-
-    _FinalStage type(Optional<String> type);
-
-    _FinalStage type(String type);
-
-    _FinalStage senderId(Optional<String> senderId);
-
-    _FinalStage senderId(String senderId);
-
-    _FinalStage senderName(Optional<String> senderName);
-
-    _FinalStage senderName(String senderName);
-
-    _FinalStage senderTaxFraudStatus(Optional<String> senderTaxFraudStatus);
-
-    _FinalStage senderTaxFraudStatus(String senderTaxFraudStatus);
-
-    _FinalStage receiverId(Optional<String> receiverId);
-
-    _FinalStage receiverId(String receiverId);
-
-    _FinalStage receiverName(Optional<String> receiverName);
-
-    _FinalStage receiverName(String receiverName);
-
-    _FinalStage receiverTaxFraudStatus(Optional<String> receiverTaxFraudStatus);
-
-    _FinalStage receiverTaxFraudStatus(String receiverTaxFraudStatus);
-
-    _FinalStage cancelationStatus(Optional<String> cancelationStatus);
-
-    _FinalStage cancelationStatus(String cancelationStatus);
-
-    _FinalStage cancelationUpdateDate(Optional<String> cancelationUpdateDate);
-
-    _FinalStage cancelationUpdateDate(String cancelationUpdateDate);
-
-    _FinalStage certificationDate(Optional<String> certificationDate);
-
-    _FinalStage certificationDate(String certificationDate);
-
-    _FinalStage certificationAuthority(Optional<String> certificationAuthority);
-
-    _FinalStage certificationAuthority(String certificationAuthority);
-
-    _FinalStage paymentType(Optional<String> paymentType);
-
-    _FinalStage paymentType(String paymentType);
-
-    _FinalStage paymentTypeDescription(Optional<String> paymentTypeDescription);
-
-    _FinalStage paymentTypeDescription(String paymentTypeDescription);
-
-    _FinalStage paymentMethod(Optional<String> paymentMethod);
-
-    _FinalStage paymentMethod(String paymentMethod);
-
-    _FinalStage paymentMethodDescription(Optional<String> paymentMethodDescription);
-
-    _FinalStage paymentMethodDescription(String paymentMethodDescription);
-
-    _FinalStage usage(Optional<String> usage);
-
-    _FinalStage usage(String usage);
-
-    _FinalStage version(Optional<String> version);
-
-    _FinalStage version(String version);
-
-    _FinalStage placeOfIssue(Optional<String> placeOfIssue);
-
-    _FinalStage placeOfIssue(String placeOfIssue);
-
-    _FinalStage invoiceDetails(List<InvoiceDetailSat> invoiceDetails);
-
-    _FinalStage addInvoiceDetails(InvoiceDetailSat invoiceDetails);
-
-    _FinalStage addAllInvoiceDetails(List<InvoiceDetailSat> invoiceDetails);
-
-    _FinalStage currency(Optional<String> currency);
-
-    _FinalStage currency(String currency);
-
-    _FinalStage subtotalAmount(Optional<Double> subtotalAmount);
-
-    _FinalStage subtotalAmount(Double subtotalAmount);
-
-    _FinalStage exchangeRate(Optional<Double> exchangeRate);
-
-    _FinalStage exchangeRate(Double exchangeRate);
-
-    _FinalStage taxAmount(Optional<Double> taxAmount);
-
-    _FinalStage taxAmount(Double taxAmount);
-
-    _FinalStage discountAmount(Optional<Double> discountAmount);
-
-    _FinalStage discountAmount(Double discountAmount);
-
-    _FinalStage totalAmount(Optional<Double> totalAmount);
-
-    _FinalStage totalAmount(Double totalAmount);
-
-    _FinalStage payments(List<InvoicesPaymentsSat> payments);
-
-    _FinalStage addPayments(InvoicesPaymentsSat payments);
-
-    _FinalStage addAllPayments(List<InvoicesPaymentsSat> payments);
-
-    _FinalStage folio(Optional<String> folio);
-
-    _FinalStage folio(String folio);
-
-    _FinalStage xml(Optional<String> xml);
-
-    _FinalStage xml(String xml);
-
-    _FinalStage warnings(Optional<InvoiceWarningsSat> warnings);
-
-    _FinalStage warnings(InvoiceWarningsSat warnings);
-
-    _FinalStage senderBlacklistStatus(Optional<String> senderBlacklistStatus);
-
-    _FinalStage senderBlacklistStatus(String senderBlacklistStatus);
-
-    _FinalStage receiverBlacklistStatus(Optional<String> receiverBlacklistStatus);
-
-    _FinalStage receiverBlacklistStatus(String receiverBlacklistStatus);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements InvoiceTypeStage, PayrollStage, _FinalStage {
-    private EnumInvoiceSatInvoiceType invoiceType;
-
-    private InvoicesPayrollSat payroll;
-
-    private Optional<String> receiverBlacklistStatus = Optional.empty();
-
-    private Optional<String> senderBlacklistStatus = Optional.empty();
-
-    private Optional<InvoiceWarningsSat> warnings = Optional.empty();
-
-    private Optional<String> xml = Optional.empty();
-
-    private Optional<String> folio = Optional.empty();
-
-    private List<InvoicesPaymentsSat> payments = new ArrayList<>();
-
-    private Optional<Double> totalAmount = Optional.empty();
-
-    private Optional<Double> discountAmount = Optional.empty();
-
-    private Optional<Double> taxAmount = Optional.empty();
-
-    private Optional<Double> exchangeRate = Optional.empty();
-
-    private Optional<Double> subtotalAmount = Optional.empty();
-
-    private Optional<String> currency = Optional.empty();
-
-    private List<InvoiceDetailSat> invoiceDetails = new ArrayList<>();
-
-    private Optional<String> placeOfIssue = Optional.empty();
-
-    private Optional<String> version = Optional.empty();
-
-    private Optional<String> usage = Optional.empty();
-
-    private Optional<String> paymentMethodDescription = Optional.empty();
-
-    private Optional<String> paymentMethod = Optional.empty();
-
-    private Optional<String> paymentTypeDescription = Optional.empty();
-
-    private Optional<String> paymentType = Optional.empty();
-
-    private Optional<String> certificationAuthority = Optional.empty();
-
-    private Optional<String> certificationDate = Optional.empty();
-
-    private Optional<String> cancelationUpdateDate = Optional.empty();
-
-    private Optional<String> cancelationStatus = Optional.empty();
-
-    private Optional<String> receiverTaxFraudStatus = Optional.empty();
-
-    private Optional<String> receiverName = Optional.empty();
-
-    private Optional<String> receiverId = Optional.empty();
-
-    private Optional<String> senderTaxFraudStatus = Optional.empty();
-
-    private Optional<String> senderName = Optional.empty();
-
-    private Optional<String> senderId = Optional.empty();
-
-    private Optional<String> type = Optional.empty();
-
-    private Optional<String> status = Optional.empty();
-
-    private Optional<String> invoiceDate = Optional.empty();
-
-    private Optional<String> invoiceIdentification = Optional.empty();
-
-    private Optional<String> createdAt = Optional.empty();
-
-    private Optional<String> collectedAt = Optional.empty();
+  public static final class Builder {
+    private Optional<String> id = Optional.empty();
 
     private Optional<String> link = Optional.empty();
 
-    private Optional<String> id = Optional.empty();
+    private Optional<String> collectedAt = Optional.empty();
+
+    private Optional<String> createdAt = Optional.empty();
+
+    private Optional<String> invoiceIdentification = Optional.empty();
+
+    private Optional<String> invoiceDate = Optional.empty();
+
+    private Optional<String> status = Optional.empty();
+
+    private Optional<EnumInvoiceSatInvoiceType> invoiceType = Optional.empty();
+
+    private Optional<String> type = Optional.empty();
+
+    private Optional<String> senderId = Optional.empty();
+
+    private Optional<String> senderName = Optional.empty();
+
+    private Optional<String> senderTaxFraudStatus = Optional.empty();
+
+    private Optional<String> receiverId = Optional.empty();
+
+    private Optional<String> receiverName = Optional.empty();
+
+    private Optional<String> receiverTaxFraudStatus = Optional.empty();
+
+    private Optional<String> cancelationStatus = Optional.empty();
+
+    private Optional<String> cancelationUpdateDate = Optional.empty();
+
+    private Optional<String> certificationDate = Optional.empty();
+
+    private Optional<String> certificationAuthority = Optional.empty();
+
+    private Optional<String> paymentType = Optional.empty();
+
+    private Optional<String> paymentTypeDescription = Optional.empty();
+
+    private Optional<String> paymentMethod = Optional.empty();
+
+    private Optional<String> paymentMethodDescription = Optional.empty();
+
+    private Optional<String> usage = Optional.empty();
+
+    private Optional<String> version = Optional.empty();
+
+    private Optional<String> placeOfIssue = Optional.empty();
+
+    private List<InvoiceDetailSat> invoiceDetails = new ArrayList<>();
+
+    private Optional<String> currency = Optional.empty();
+
+    private Optional<Double> subtotalAmount = Optional.empty();
+
+    private Optional<Double> exchangeRate = Optional.empty();
+
+    private Optional<Double> taxAmount = Optional.empty();
+
+    private Optional<Double> discountAmount = Optional.empty();
+
+    private Optional<Double> totalAmount = Optional.empty();
+
+    private List<InvoicesPaymentsSat> payments = new ArrayList<>();
+
+    private Optional<InvoicesPayrollSat> payroll = Optional.empty();
+
+    private Optional<String> folio = Optional.empty();
+
+    private Optional<String> xml = Optional.empty();
+
+    private Optional<InvoiceWarningsSat> warnings = Optional.empty();
+
+    private Optional<String> senderBlacklistStatus = Optional.empty();
+
+    private Optional<String> receiverBlacklistStatus = Optional.empty();
 
     private Builder() {
     }
 
-    @Override
     public Builder from(InvoiceWithIdSat other) {
       id(other.getId());
       link(other.getLink());
@@ -818,816 +647,578 @@ public final class InvoiceWithIdSat {
       return this;
     }
 
-    @Override
-    @JsonSetter("invoice_type")
-    public PayrollStage invoiceType(EnumInvoiceSatInvoiceType invoiceType) {
+    @JsonSetter(
+        value = "id",
+        nulls = Nulls.SKIP
+    )
+    public Builder id(Optional<String> id) {
+      this.id = id;
+      return this;
+    }
+
+    public Builder id(String id) {
+      this.id = Optional.of(id);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "link",
+        nulls = Nulls.SKIP
+    )
+    public Builder link(Optional<String> link) {
+      this.link = link;
+      return this;
+    }
+
+    public Builder link(String link) {
+      this.link = Optional.of(link);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "collected_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder collectedAt(Optional<String> collectedAt) {
+      this.collectedAt = collectedAt;
+      return this;
+    }
+
+    public Builder collectedAt(String collectedAt) {
+      this.collectedAt = Optional.of(collectedAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "created_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder createdAt(Optional<String> createdAt) {
+      this.createdAt = createdAt;
+      return this;
+    }
+
+    public Builder createdAt(String createdAt) {
+      this.createdAt = Optional.of(createdAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "invoice_identification",
+        nulls = Nulls.SKIP
+    )
+    public Builder invoiceIdentification(Optional<String> invoiceIdentification) {
+      this.invoiceIdentification = invoiceIdentification;
+      return this;
+    }
+
+    public Builder invoiceIdentification(String invoiceIdentification) {
+      this.invoiceIdentification = Optional.of(invoiceIdentification);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "invoice_date",
+        nulls = Nulls.SKIP
+    )
+    public Builder invoiceDate(Optional<String> invoiceDate) {
+      this.invoiceDate = invoiceDate;
+      return this;
+    }
+
+    public Builder invoiceDate(String invoiceDate) {
+      this.invoiceDate = Optional.of(invoiceDate);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "status",
+        nulls = Nulls.SKIP
+    )
+    public Builder status(Optional<String> status) {
+      this.status = status;
+      return this;
+    }
+
+    public Builder status(String status) {
+      this.status = Optional.of(status);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "invoice_type",
+        nulls = Nulls.SKIP
+    )
+    public Builder invoiceType(Optional<EnumInvoiceSatInvoiceType> invoiceType) {
       this.invoiceType = invoiceType;
       return this;
     }
 
-    @Override
-    @JsonSetter("payroll")
-    public _FinalStage payroll(InvoicesPayrollSat payroll) {
-      this.payroll = payroll;
+    public Builder invoiceType(EnumInvoiceSatInvoiceType invoiceType) {
+      this.invoiceType = Optional.of(invoiceType);
       return this;
     }
 
-    /**
-     * <p>This field has been deprecated. Please use <code>receiver_tax_fraud_status</code> instead.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverBlacklistStatus(String receiverBlacklistStatus) {
-      this.receiverBlacklistStatus = Optional.of(receiverBlacklistStatus);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
-        value = "receiver_blacklist_status",
+        value = "type",
         nulls = Nulls.SKIP
     )
-    public _FinalStage receiverBlacklistStatus(Optional<String> receiverBlacklistStatus) {
-      this.receiverBlacklistStatus = receiverBlacklistStatus;
+    public Builder type(Optional<String> type) {
+      this.type = type;
       return this;
     }
 
-    /**
-     * <p>This field has been deprecated. Please use <code>sender_tax_fraud_status</code> instead.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderBlacklistStatus(String senderBlacklistStatus) {
-      this.senderBlacklistStatus = Optional.of(senderBlacklistStatus);
+    public Builder type(String type) {
+      this.type = Optional.of(type);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "sender_blacklist_status",
+        value = "sender_id",
         nulls = Nulls.SKIP
     )
-    public _FinalStage senderBlacklistStatus(Optional<String> senderBlacklistStatus) {
-      this.senderBlacklistStatus = senderBlacklistStatus;
+    public Builder senderId(Optional<String> senderId) {
+      this.senderId = senderId;
       return this;
     }
 
-    @Override
-    public _FinalStage warnings(InvoiceWarningsSat warnings) {
-      this.warnings = Optional.of(warnings);
+    public Builder senderId(String senderId) {
+      this.senderId = Optional.of(senderId);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "warnings",
+        value = "sender_name",
         nulls = Nulls.SKIP
     )
-    public _FinalStage warnings(Optional<InvoiceWarningsSat> warnings) {
-      this.warnings = warnings;
+    public Builder senderName(Optional<String> senderName) {
+      this.senderName = senderName;
       return this;
     }
 
-    /**
-     * <p>XML of the invoice document.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage xml(String xml) {
-      this.xml = Optional.of(xml);
+    public Builder senderName(String senderName) {
+      this.senderName = Optional.of(senderName);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "xml",
+        value = "sender_tax_fraud_status",
         nulls = Nulls.SKIP
     )
-    public _FinalStage xml(Optional<String> xml) {
-      this.xml = xml;
+    public Builder senderTaxFraudStatus(Optional<String> senderTaxFraudStatus) {
+      this.senderTaxFraudStatus = senderTaxFraudStatus;
       return this;
     }
 
-    /**
-     * <p>The internal control number that the taxpayer assigns to the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage folio(String folio) {
-      this.folio = Optional.of(folio);
+    public Builder senderTaxFraudStatus(String senderTaxFraudStatus) {
+      this.senderTaxFraudStatus = Optional.of(senderTaxFraudStatus);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "folio",
+        value = "receiver_id",
         nulls = Nulls.SKIP
     )
-    public _FinalStage folio(Optional<String> folio) {
-      this.folio = folio;
+    public Builder receiverId(Optional<String> receiverId) {
+      this.receiverId = receiverId;
       return this;
     }
 
-    /**
-     * <p>A list detailing all the invoice payments.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addAllPayments(List<InvoicesPaymentsSat> payments) {
-      this.payments.addAll(payments);
+    public Builder receiverId(String receiverId) {
+      this.receiverId = Optional.of(receiverId);
       return this;
     }
 
-    /**
-     * <p>A list detailing all the invoice payments.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addPayments(InvoicesPaymentsSat payments) {
-      this.payments.add(payments);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
-        value = "payments",
+        value = "receiver_name",
         nulls = Nulls.SKIP
     )
-    public _FinalStage payments(List<InvoicesPaymentsSat> payments) {
-      this.payments.clear();
-      this.payments.addAll(payments);
+    public Builder receiverName(Optional<String> receiverName) {
+      this.receiverName = receiverName;
       return this;
     }
 
-    /**
-     * <p>The total amount of the invoice (<code>subtotal_amount</code> + <code>tax_amount</code> - <code>discount_amount</code>)</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage totalAmount(Double totalAmount) {
-      this.totalAmount = Optional.of(totalAmount);
+    public Builder receiverName(String receiverName) {
+      this.receiverName = Optional.of(receiverName);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "total_amount",
+        value = "receiver_tax_fraud_status",
         nulls = Nulls.SKIP
     )
-    public _FinalStage totalAmount(Optional<Double> totalAmount) {
-      this.totalAmount = totalAmount;
+    public Builder receiverTaxFraudStatus(Optional<String> receiverTaxFraudStatus) {
+      this.receiverTaxFraudStatus = receiverTaxFraudStatus;
       return this;
     }
 
-    /**
-     * <p>The total amount discounted in this invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage discountAmount(Double discountAmount) {
-      this.discountAmount = Optional.of(discountAmount);
+    public Builder receiverTaxFraudStatus(String receiverTaxFraudStatus) {
+      this.receiverTaxFraudStatus = Optional.of(receiverTaxFraudStatus);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "discount_amount",
+        value = "cancelation_status",
         nulls = Nulls.SKIP
     )
-    public _FinalStage discountAmount(Optional<Double> discountAmount) {
-      this.discountAmount = discountAmount;
+    public Builder cancelationStatus(Optional<String> cancelationStatus) {
+      this.cancelationStatus = cancelationStatus;
       return this;
     }
 
-    /**
-     * <p>The amount of tax for this invoice (sum of each item's <code>tax_amount</code>).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage taxAmount(Double taxAmount) {
-      this.taxAmount = Optional.of(taxAmount);
+    public Builder cancelationStatus(String cancelationStatus) {
+      this.cancelationStatus = Optional.of(cancelationStatus);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "tax_amount",
+        value = "cancelation_update_date",
         nulls = Nulls.SKIP
     )
-    public _FinalStage taxAmount(Optional<Double> taxAmount) {
-      this.taxAmount = taxAmount;
+    public Builder cancelationUpdateDate(Optional<String> cancelationUpdateDate) {
+      this.cancelationUpdateDate = cancelationUpdateDate;
       return this;
     }
 
-    /**
-     * <p>The exchange rate used in this invoice for the currency.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage exchangeRate(Double exchangeRate) {
-      this.exchangeRate = Optional.of(exchangeRate);
+    public Builder cancelationUpdateDate(String cancelationUpdateDate) {
+      this.cancelationUpdateDate = Optional.of(cancelationUpdateDate);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "exchange_rate",
+        value = "certification_date",
         nulls = Nulls.SKIP
     )
-    public _FinalStage exchangeRate(Optional<Double> exchangeRate) {
-      this.exchangeRate = exchangeRate;
+    public Builder certificationDate(Optional<String> certificationDate) {
+      this.certificationDate = certificationDate;
       return this;
     }
 
-    /**
-     * <p>The pretax amount of this invoice (sum of each item's <code>pre_tax_amount</code>).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage subtotalAmount(Double subtotalAmount) {
-      this.subtotalAmount = Optional.of(subtotalAmount);
+    public Builder certificationDate(String certificationDate) {
+      this.certificationDate = Optional.of(certificationDate);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "subtotal_amount",
+        value = "certification_authority",
         nulls = Nulls.SKIP
     )
-    public _FinalStage subtotalAmount(Optional<Double> subtotalAmount) {
-      this.subtotalAmount = subtotalAmount;
+    public Builder certificationAuthority(Optional<String> certificationAuthority) {
+      this.certificationAuthority = certificationAuthority;
       return this;
     }
 
-    /**
-     * <p>The currency of the invoice. For example:</p>
-     * <ul>
-     * <li>🇧🇷 BRL (Brazilian Real)</li>
-     * <li>🇨🇴 COP (Colombian Peso)</li>
-     * <li>🇲🇽 MXN (Mexican Peso)</li>
-     * <li>🇺🇸 USD (United States Dollar)</li>
-     * </ul>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage currency(String currency) {
-      this.currency = Optional.of(currency);
+    public Builder certificationAuthority(String certificationAuthority) {
+      this.certificationAuthority = Optional.of(certificationAuthority);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "currency",
+        value = "payment_type",
         nulls = Nulls.SKIP
     )
-    public _FinalStage currency(Optional<String> currency) {
-      this.currency = currency;
+    public Builder paymentType(Optional<String> paymentType) {
+      this.paymentType = paymentType;
       return this;
     }
 
-    /**
-     * <p>A list of descriptions for each item (purchased product or service provided) in the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addAllInvoiceDetails(List<InvoiceDetailSat> invoiceDetails) {
-      this.invoiceDetails.addAll(invoiceDetails);
+    public Builder paymentType(String paymentType) {
+      this.paymentType = Optional.of(paymentType);
       return this;
     }
 
-    /**
-     * <p>A list of descriptions for each item (purchased product or service provided) in the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addInvoiceDetails(InvoiceDetailSat invoiceDetails) {
-      this.invoiceDetails.add(invoiceDetails);
+    @JsonSetter(
+        value = "payment_type_description",
+        nulls = Nulls.SKIP
+    )
+    public Builder paymentTypeDescription(Optional<String> paymentTypeDescription) {
+      this.paymentTypeDescription = paymentTypeDescription;
       return this;
     }
 
-    @Override
+    public Builder paymentTypeDescription(String paymentTypeDescription) {
+      this.paymentTypeDescription = Optional.of(paymentTypeDescription);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "payment_method",
+        nulls = Nulls.SKIP
+    )
+    public Builder paymentMethod(Optional<String> paymentMethod) {
+      this.paymentMethod = paymentMethod;
+      return this;
+    }
+
+    public Builder paymentMethod(String paymentMethod) {
+      this.paymentMethod = Optional.of(paymentMethod);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "payment_method_description",
+        nulls = Nulls.SKIP
+    )
+    public Builder paymentMethodDescription(Optional<String> paymentMethodDescription) {
+      this.paymentMethodDescription = paymentMethodDescription;
+      return this;
+    }
+
+    public Builder paymentMethodDescription(String paymentMethodDescription) {
+      this.paymentMethodDescription = Optional.of(paymentMethodDescription);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "usage",
+        nulls = Nulls.SKIP
+    )
+    public Builder usage(Optional<String> usage) {
+      this.usage = usage;
+      return this;
+    }
+
+    public Builder usage(String usage) {
+      this.usage = Optional.of(usage);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "version",
+        nulls = Nulls.SKIP
+    )
+    public Builder version(Optional<String> version) {
+      this.version = version;
+      return this;
+    }
+
+    public Builder version(String version) {
+      this.version = Optional.of(version);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "place_of_issue",
+        nulls = Nulls.SKIP
+    )
+    public Builder placeOfIssue(Optional<String> placeOfIssue) {
+      this.placeOfIssue = placeOfIssue;
+      return this;
+    }
+
+    public Builder placeOfIssue(String placeOfIssue) {
+      this.placeOfIssue = Optional.of(placeOfIssue);
+      return this;
+    }
+
     @JsonSetter(
         value = "invoice_details",
         nulls = Nulls.SKIP
     )
-    public _FinalStage invoiceDetails(List<InvoiceDetailSat> invoiceDetails) {
+    public Builder invoiceDetails(List<InvoiceDetailSat> invoiceDetails) {
       this.invoiceDetails.clear();
       this.invoiceDetails.addAll(invoiceDetails);
       return this;
     }
 
-    /**
-     * <p>The postcode of where the invoice was issued.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage placeOfIssue(String placeOfIssue) {
-      this.placeOfIssue = Optional.of(placeOfIssue);
+    public Builder addInvoiceDetails(InvoiceDetailSat invoiceDetails) {
+      this.invoiceDetails.add(invoiceDetails);
       return this;
     }
 
-    @Override
+    public Builder addAllInvoiceDetails(List<InvoiceDetailSat> invoiceDetails) {
+      this.invoiceDetails.addAll(invoiceDetails);
+      return this;
+    }
+
     @JsonSetter(
-        value = "place_of_issue",
+        value = "currency",
         nulls = Nulls.SKIP
     )
-    public _FinalStage placeOfIssue(Optional<String> placeOfIssue) {
-      this.placeOfIssue = placeOfIssue;
+    public Builder currency(Optional<String> currency) {
+      this.currency = currency;
       return this;
     }
 
-    /**
-     * <p>The CFDI version of the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage version(String version) {
-      this.version = Optional.of(version);
+    public Builder currency(String currency) {
+      this.currency = Optional.of(currency);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "version",
+        value = "subtotal_amount",
         nulls = Nulls.SKIP
     )
-    public _FinalStage version(Optional<String> version) {
-      this.version = version;
+    public Builder subtotalAmount(Optional<Double> subtotalAmount) {
+      this.subtotalAmount = subtotalAmount;
       return this;
     }
 
-    /**
-     * <p>The invoice's usage code, as defined by the legal entity of the country.</p>
-     * <ul>
-     * <li>🇲🇽 Mexico <a href="https://developers.belvo.com/docs/sat-catalogs#usage">SAT catalog reference article</a></li>
-     * </ul>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage usage(String usage) {
-      this.usage = Optional.of(usage);
+    public Builder subtotalAmount(Double subtotalAmount) {
+      this.subtotalAmount = Optional.of(subtotalAmount);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "usage",
+        value = "exchange_rate",
         nulls = Nulls.SKIP
     )
-    public _FinalStage usage(Optional<String> usage) {
-      this.usage = usage;
+    public Builder exchangeRate(Optional<Double> exchangeRate) {
+      this.exchangeRate = exchangeRate;
       return this;
     }
 
-    /**
-     * <p><em>This field has been deprecated.</em></p>
-     * <p><em>The description of the payment method used for this invoice.</em></p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage paymentMethodDescription(String paymentMethodDescription) {
-      this.paymentMethodDescription = Optional.of(paymentMethodDescription);
+    public Builder exchangeRate(Double exchangeRate) {
+      this.exchangeRate = Optional.of(exchangeRate);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "payment_method_description",
+        value = "tax_amount",
         nulls = Nulls.SKIP
     )
-    public _FinalStage paymentMethodDescription(Optional<String> paymentMethodDescription) {
-      this.paymentMethodDescription = paymentMethodDescription;
+    public Builder taxAmount(Optional<Double> taxAmount) {
+      this.taxAmount = taxAmount;
       return this;
     }
 
-    @Override
-    public _FinalStage paymentMethod(String paymentMethod) {
-      this.paymentMethod = Optional.of(paymentMethod);
+    public Builder taxAmount(Double taxAmount) {
+      this.taxAmount = Optional.of(taxAmount);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "payment_method",
+        value = "discount_amount",
         nulls = Nulls.SKIP
     )
-    public _FinalStage paymentMethod(Optional<String> paymentMethod) {
-      this.paymentMethod = paymentMethod;
+    public Builder discountAmount(Optional<Double> discountAmount) {
+      this.discountAmount = discountAmount;
       return this;
     }
 
-    /**
-     * <p><em>This field has been deprecated.</em></p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage paymentTypeDescription(String paymentTypeDescription) {
-      this.paymentTypeDescription = Optional.of(paymentTypeDescription);
+    public Builder discountAmount(Double discountAmount) {
+      this.discountAmount = Optional.of(discountAmount);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "payment_type_description",
+        value = "total_amount",
         nulls = Nulls.SKIP
     )
-    public _FinalStage paymentTypeDescription(Optional<String> paymentTypeDescription) {
-      this.paymentTypeDescription = paymentTypeDescription;
+    public Builder totalAmount(Optional<Double> totalAmount) {
+      this.totalAmount = totalAmount;
       return this;
     }
 
-    /**
-     * <p>The payment type code used for this invoice, as defined by the country legal entity.</p>
-     * <ul>
-     * <li>🇲🇽 Mexico <a href="https://developers.belvo.com/docs/sat-catalogs#payment-type">SAT catalog reference article</a></li>
-     * </ul>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage paymentType(String paymentType) {
-      this.paymentType = Optional.of(paymentType);
+    public Builder totalAmount(Double totalAmount) {
+      this.totalAmount = Optional.of(totalAmount);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "payment_type",
+        value = "payments",
         nulls = Nulls.SKIP
     )
-    public _FinalStage paymentType(Optional<String> paymentType) {
-      this.paymentType = paymentType;
+    public Builder payments(List<InvoicesPaymentsSat> payments) {
+      this.payments.clear();
+      this.payments.addAll(payments);
       return this;
     }
 
-    /**
-     * <p>The fiscal ID of the certification provider.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage certificationAuthority(String certificationAuthority) {
-      this.certificationAuthority = Optional.of(certificationAuthority);
+    public Builder addPayments(InvoicesPaymentsSat payments) {
+      this.payments.add(payments);
       return this;
     }
 
-    @Override
+    public Builder addAllPayments(List<InvoicesPaymentsSat> payments) {
+      this.payments.addAll(payments);
+      return this;
+    }
+
     @JsonSetter(
-        value = "certification_authority",
+        value = "payroll",
         nulls = Nulls.SKIP
     )
-    public _FinalStage certificationAuthority(Optional<String> certificationAuthority) {
-      this.certificationAuthority = certificationAuthority;
+    public Builder payroll(Optional<InvoicesPayrollSat> payroll) {
+      this.payroll = payroll;
       return this;
     }
 
-    /**
-     * <p>The date of the fiscal certification.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage certificationDate(String certificationDate) {
-      this.certificationDate = Optional.of(certificationDate);
+    public Builder payroll(InvoicesPayrollSat payroll) {
+      this.payroll = Optional.of(payroll);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "certification_date",
+        value = "folio",
         nulls = Nulls.SKIP
     )
-    public _FinalStage certificationDate(Optional<String> certificationDate) {
-      this.certificationDate = certificationDate;
+    public Builder folio(Optional<String> folio) {
+      this.folio = folio;
       return this;
     }
 
-    /**
-     * <p>The date of the invoice cancelation.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage cancelationUpdateDate(String cancelationUpdateDate) {
-      this.cancelationUpdateDate = Optional.of(cancelationUpdateDate);
+    public Builder folio(String folio) {
+      this.folio = Optional.of(folio);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "cancelation_update_date",
+        value = "xml",
         nulls = Nulls.SKIP
     )
-    public _FinalStage cancelationUpdateDate(Optional<String> cancelationUpdateDate) {
-      this.cancelationUpdateDate = cancelationUpdateDate;
+    public Builder xml(Optional<String> xml) {
+      this.xml = xml;
       return this;
     }
 
-    /**
-     * <p>If the invoice is cancelled, this field indicates the status of the cancellation.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage cancelationStatus(String cancelationStatus) {
-      this.cancelationStatus = Optional.of(cancelationStatus);
+    public Builder xml(String xml) {
+      this.xml = Optional.of(xml);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "cancelation_status",
+        value = "warnings",
         nulls = Nulls.SKIP
     )
-    public _FinalStage cancelationStatus(Optional<String> cancelationStatus) {
-      this.cancelationStatus = cancelationStatus;
+    public Builder warnings(Optional<InvoiceWarningsSat> warnings) {
+      this.warnings = warnings;
       return this;
     }
 
-    /**
-     * <p>Indicates whether or not the receiver is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.&lt;br&gt;&lt;br&gt;
-     * SAT updates the tax fraud list every three months. &lt;br&gt;&lt;br&gt;
-     * For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see <a href="http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html">Article 69</a> and <a href="http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html">Article 69-B</a> of Mexico's Código Fiscal de la Federación. &lt;br&gt;&lt;br&gt;
-     * Possible statuses are:</p>
-     * <ul>
-     * <li><code>INVESTIGATING</code> &lt;br&gt; The fiscal institution has identified irregularities and open an investigation regarding the taxpayer. &lt;br&gt; - <code>DISMISSED</code> &lt;br&gt; The fiscal institution has investigated the taxpayer and declared them innocent. &lt;br&gt; - <code>CONFIRMED</code> &lt;br&gt; The fiscal institution has confirmed that the taxpayer is guilty. &lt;br&gt; - <code>OVERTURNED</code> &lt;br&gt; The fiscal institution has reassessed a previously confirmed taxpayer and, based on new evidence, has taken the taxpayer off the tax fraud list. &lt;br&gt; - <code>NO_TAX_FRAUD_STATUS</code> &lt;br&gt; The receiver or sender is not found in the list (in other words, they are complying with the fiscal institution's regulations).</li>
-     * </ul>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverTaxFraudStatus(String receiverTaxFraudStatus) {
-      this.receiverTaxFraudStatus = Optional.of(receiverTaxFraudStatus);
+    public Builder warnings(InvoiceWarningsSat warnings) {
+      this.warnings = Optional.of(warnings);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "receiver_tax_fraud_status",
+        value = "sender_blacklist_status",
         nulls = Nulls.SKIP
     )
-    public _FinalStage receiverTaxFraudStatus(Optional<String> receiverTaxFraudStatus) {
-      this.receiverTaxFraudStatus = receiverTaxFraudStatus;
+    public Builder senderBlacklistStatus(Optional<String> senderBlacklistStatus) {
+      this.senderBlacklistStatus = senderBlacklistStatus;
       return this;
     }
 
-    /**
-     * <p>The name of the invoice receiver.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverName(String receiverName) {
-      this.receiverName = Optional.of(receiverName);
+    public Builder senderBlacklistStatus(String senderBlacklistStatus) {
+      this.senderBlacklistStatus = Optional.of(senderBlacklistStatus);
       return this;
     }
 
-    @Override
     @JsonSetter(
-        value = "receiver_name",
+        value = "receiver_blacklist_status",
         nulls = Nulls.SKIP
     )
-    public _FinalStage receiverName(Optional<String> receiverName) {
-      this.receiverName = receiverName;
+    public Builder receiverBlacklistStatus(Optional<String> receiverBlacklistStatus) {
+      this.receiverBlacklistStatus = receiverBlacklistStatus;
       return this;
     }
 
-    /**
-     * <p>The fiscal ID of the invoice receiver.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverId(String receiverId) {
-      this.receiverId = Optional.of(receiverId);
+    public Builder receiverBlacklistStatus(String receiverBlacklistStatus) {
+      this.receiverBlacklistStatus = Optional.of(receiverBlacklistStatus);
       return this;
     }
 
-    @Override
-    @JsonSetter(
-        value = "receiver_id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage receiverId(Optional<String> receiverId) {
-      this.receiverId = receiverId;
-      return this;
-    }
-
-    /**
-     * <p>Indicates whether or not the sender is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.&lt;br&gt;&lt;br&gt;
-     * SAT updates the tax fraud list every three months. &lt;br&gt;&lt;br&gt;
-     * For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see <a href="http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html">Article 69</a> and <a href="http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html">Article 69-B</a> of Mexico's Código Fiscal de la Federación. &lt;br&gt;&lt;br&gt;
-     * Possible statuses are:</p>
-     * <ul>
-     * <li><code>INVESTIGATING</code> &lt;br&gt; The fiscal institution has identified irregularities and open an investigation regarding the taxpayer. &lt;br&gt; - <code>DISMISSED</code> &lt;br&gt; The fiscal institution has investigated the taxpayer and declared them innocent. &lt;br&gt; - <code>CONFIRMED</code> &lt;br&gt; The fiscal institution has confirmed that the taxpayer is guilty. &lt;br&gt; - <code>OVERTURNED</code> &lt;br&gt; The fiscal institution has reassessed a previously confirmed taxpayer and, based on new evidence, has taken the taxpayer off the tax fraud list. &lt;br&gt; - <code>NO_TAX_FRAUD_STATUS</code> &lt;br&gt; The receiver or sender is not found in the list (in other words, they are complying with the fiscal institution's regulations).</li>
-     * </ul>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderTaxFraudStatus(String senderTaxFraudStatus) {
-      this.senderTaxFraudStatus = Optional.of(senderTaxFraudStatus);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "sender_tax_fraud_status",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage senderTaxFraudStatus(Optional<String> senderTaxFraudStatus) {
-      this.senderTaxFraudStatus = senderTaxFraudStatus;
-      return this;
-    }
-
-    /**
-     * <p>The name of the invoice sender.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderName(String senderName) {
-      this.senderName = Optional.of(senderName);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "sender_name",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage senderName(Optional<String> senderName) {
-      this.senderName = senderName;
-      return this;
-    }
-
-    /**
-     * <p>The fiscal ID of the invoice sender</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderId(String senderId) {
-      this.senderId = Optional.of(senderId);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "sender_id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage senderId(Optional<String> senderId) {
-      this.senderId = senderId;
-      return this;
-    }
-
-    @Override
-    public _FinalStage type(String type) {
-      this.type = Optional.of(type);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "type",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage type(Optional<String> type) {
-      this.type = type;
-      return this;
-    }
-
-    /**
-     * <p>The status of the invoice. Can be either <em>Vigente</em> (valid) or <em>Cancelado</em> (cancelled).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage status(String status) {
-      this.status = Optional.of(status);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "status",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage status(Optional<String> status) {
-      this.status = status;
-      return this;
-    }
-
-    /**
-     * <p>The date of the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage invoiceDate(String invoiceDate) {
-      this.invoiceDate = Optional.of(invoiceDate);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "invoice_date",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage invoiceDate(Optional<String> invoiceDate) {
-      this.invoiceDate = invoiceDate;
-      return this;
-    }
-
-    /**
-     * <p>The fiscal institution's unique ID for the invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage invoiceIdentification(String invoiceIdentification) {
-      this.invoiceIdentification = Optional.of(invoiceIdentification);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "invoice_identification",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage invoiceIdentification(Optional<String> invoiceIdentification) {
-      this.invoiceIdentification = invoiceIdentification;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the data point was last updated in Belvo's database.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage createdAt(String createdAt) {
-      this.createdAt = Optional.of(createdAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "created_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage createdAt(Optional<String> createdAt) {
-      this.createdAt = createdAt;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp when the data point was collected.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage collectedAt(String collectedAt) {
-      this.collectedAt = Optional.of(collectedAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "collected_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage collectedAt(Optional<String> collectedAt) {
-      this.collectedAt = collectedAt;
-      return this;
-    }
-
-    /**
-     * <p>The <code>link.id</code> the invoice belongs to.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage link(String link) {
-      this.link = Optional.of(link);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "link",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage link(Optional<String> link) {
-      this.link = link;
-      return this;
-    }
-
-    /**
-     * <p>Belvo's unique identifier used to reference the current invoice.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage id(String id) {
-      this.id = Optional.of(id);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage id(Optional<String> id) {
-      this.id = id;
-      return this;
-    }
-
-    @Override
     public InvoiceWithIdSat build() {
       return new InvoiceWithIdSat(id, link, collectedAt, createdAt, invoiceIdentification, invoiceDate, status, invoiceType, type, senderId, senderName, senderTaxFraudStatus, receiverId, receiverName, receiverTaxFraudStatus, cancelationStatus, cancelationUpdateDate, certificationDate, certificationAuthority, paymentType, paymentTypeDescription, paymentMethod, paymentMethodDescription, usage, version, placeOfIssue, invoiceDetails, currency, subtotalAmount, exchangeRate, taxAmount, discountAmount, totalAmount, payments, payroll, folio, xml, warnings, senderBlacklistStatus, receiverBlacklistStatus);
     }

@@ -42,9 +42,9 @@ public final class ReceivablesTransaction {
 
   private final List<RecevablesTransactionFees> fees;
 
-  private final EnumReceivableTransactionStatus status;
+  private final Optional<EnumReceivableTransactionStatus> status;
 
-  private final ReceivablesTransactionNumberOfInstallments numberOfInstallments;
+  private final Optional<ReceivablesTransactionNumberOfInstallments> numberOfInstallments;
 
   private int _cachedHashCode;
 
@@ -52,8 +52,8 @@ public final class ReceivablesTransaction {
       String collectedAt, String valueHour, String valueDate, String institutionTransactionId,
       String currency, Optional<String> type, Optional<Double> grossAmount,
       Optional<Double> netAmount, List<RecevablesTransactionFees> fees,
-      EnumReceivableTransactionStatus status,
-      ReceivablesTransactionNumberOfInstallments numberOfInstallments) {
+      Optional<EnumReceivableTransactionStatus> status,
+      Optional<ReceivablesTransactionNumberOfInstallments> numberOfInstallments) {
     this.id = id;
     this.account = account;
     this.createdAt = createdAt;
@@ -165,12 +165,12 @@ public final class ReceivablesTransaction {
   }
 
   @JsonProperty("status")
-  public EnumReceivableTransactionStatus getStatus() {
+  public Optional<EnumReceivableTransactionStatus> getStatus() {
     return status;
   }
 
   @JsonProperty("number_of_installments")
-  public ReceivablesTransactionNumberOfInstallments getNumberOfInstallments() {
+  public Optional<ReceivablesTransactionNumberOfInstallments> getNumberOfInstallments() {
     return numberOfInstallments;
   }
 
@@ -232,16 +232,7 @@ public final class ReceivablesTransaction {
   }
 
   public interface CurrencyStage {
-    StatusStage currency(String currency);
-  }
-
-  public interface StatusStage {
-    NumberOfInstallmentsStage status(EnumReceivableTransactionStatus status);
-  }
-
-  public interface NumberOfInstallmentsStage {
-    _FinalStage numberOfInstallments(
-        ReceivablesTransactionNumberOfInstallments numberOfInstallments);
+    _FinalStage currency(String currency);
   }
 
   public interface _FinalStage {
@@ -264,12 +255,22 @@ public final class ReceivablesTransaction {
     _FinalStage addFees(RecevablesTransactionFees fees);
 
     _FinalStage addAllFees(List<RecevablesTransactionFees> fees);
+
+    _FinalStage status(Optional<EnumReceivableTransactionStatus> status);
+
+    _FinalStage status(EnumReceivableTransactionStatus status);
+
+    _FinalStage numberOfInstallments(
+        Optional<ReceivablesTransactionNumberOfInstallments> numberOfInstallments);
+
+    _FinalStage numberOfInstallments(
+        ReceivablesTransactionNumberOfInstallments numberOfInstallments);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, AccountStage, CreatedAtStage, CollectedAtStage, ValueHourStage, ValueDateStage, InstitutionTransactionIdStage, CurrencyStage, StatusStage, NumberOfInstallmentsStage, _FinalStage {
+  public static final class Builder implements IdStage, AccountStage, CreatedAtStage, CollectedAtStage, ValueHourStage, ValueDateStage, InstitutionTransactionIdStage, CurrencyStage, _FinalStage {
     private String id;
 
     private ReceivablesTransactionAccount account;
@@ -286,9 +287,9 @@ public final class ReceivablesTransaction {
 
     private String currency;
 
-    private EnumReceivableTransactionStatus status;
+    private Optional<ReceivablesTransactionNumberOfInstallments> numberOfInstallments = Optional.empty();
 
-    private ReceivablesTransactionNumberOfInstallments numberOfInstallments;
+    private Optional<EnumReceivableTransactionStatus> status = Optional.empty();
 
     private List<RecevablesTransactionFees> fees = new ArrayList<>();
 
@@ -406,23 +407,42 @@ public final class ReceivablesTransaction {
      */
     @Override
     @JsonSetter("currency")
-    public StatusStage currency(String currency) {
+    public _FinalStage currency(String currency) {
       this.currency = currency;
       return this;
     }
 
     @Override
-    @JsonSetter("status")
-    public NumberOfInstallmentsStage status(EnumReceivableTransactionStatus status) {
-      this.status = status;
+    public _FinalStage numberOfInstallments(
+        ReceivablesTransactionNumberOfInstallments numberOfInstallments) {
+      this.numberOfInstallments = Optional.of(numberOfInstallments);
       return this;
     }
 
     @Override
-    @JsonSetter("number_of_installments")
+    @JsonSetter(
+        value = "number_of_installments",
+        nulls = Nulls.SKIP
+    )
     public _FinalStage numberOfInstallments(
-        ReceivablesTransactionNumberOfInstallments numberOfInstallments) {
+        Optional<ReceivablesTransactionNumberOfInstallments> numberOfInstallments) {
       this.numberOfInstallments = numberOfInstallments;
+      return this;
+    }
+
+    @Override
+    public _FinalStage status(EnumReceivableTransactionStatus status) {
+      this.status = Optional.of(status);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "status",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage status(Optional<EnumReceivableTransactionStatus> status) {
+      this.status = status;
       return this;
     }
 

@@ -30,9 +30,9 @@ public final class TaxStatusSat {
 
   private final Optional<String> idCif;
 
-  private final TaxStatusTaxPayerInformationSat taxPayerInformation;
+  private final Optional<TaxStatusTaxPayerInformationSat> taxPayerInformation;
 
-  private final TaxStatusAddressSat address;
+  private final Optional<TaxStatusAddressSat> address;
 
   private final Optional<List<TaxStatusEconomicActivitySat>> economicActivity;
 
@@ -50,8 +50,9 @@ public final class TaxStatusSat {
 
   TaxStatusSat(String id, String link, Optional<String> collectedAt, String createdAt,
       Optional<String> placeAndDateOfIssuance, Optional<String> officialName,
-      Optional<String> idCif, TaxStatusTaxPayerInformationSat taxPayerInformation,
-      TaxStatusAddressSat address, Optional<List<TaxStatusEconomicActivitySat>> economicActivity,
+      Optional<String> idCif, Optional<TaxStatusTaxPayerInformationSat> taxPayerInformation,
+      Optional<TaxStatusAddressSat> address,
+      Optional<List<TaxStatusEconomicActivitySat>> economicActivity,
       Optional<List<TaxStatusRegimensSat>> regimes,
       Optional<List<TaxStatusObligationsSat>> obligations, Optional<String> digitalStamp,
       Optional<String> digitalStampChain, Optional<String> pdf) {
@@ -129,12 +130,12 @@ public final class TaxStatusSat {
   }
 
   @JsonProperty("tax_payer_information")
-  public TaxStatusTaxPayerInformationSat getTaxPayerInformation() {
+  public Optional<TaxStatusTaxPayerInformationSat> getTaxPayerInformation() {
     return taxPayerInformation;
   }
 
   @JsonProperty("address")
-  public TaxStatusAddressSat getAddress() {
+  public Optional<TaxStatusAddressSat> getAddress() {
     return address;
   }
 
@@ -225,15 +226,7 @@ public final class TaxStatusSat {
   }
 
   public interface CreatedAtStage {
-    TaxPayerInformationStage createdAt(String createdAt);
-  }
-
-  public interface TaxPayerInformationStage {
-    AddressStage taxPayerInformation(TaxStatusTaxPayerInformationSat taxPayerInformation);
-  }
-
-  public interface AddressStage {
-    _FinalStage address(TaxStatusAddressSat address);
+    _FinalStage createdAt(String createdAt);
   }
 
   public interface _FinalStage {
@@ -254,6 +247,14 @@ public final class TaxStatusSat {
     _FinalStage idCif(Optional<String> idCif);
 
     _FinalStage idCif(String idCif);
+
+    _FinalStage taxPayerInformation(Optional<TaxStatusTaxPayerInformationSat> taxPayerInformation);
+
+    _FinalStage taxPayerInformation(TaxStatusTaxPayerInformationSat taxPayerInformation);
+
+    _FinalStage address(Optional<TaxStatusAddressSat> address);
+
+    _FinalStage address(TaxStatusAddressSat address);
 
     _FinalStage economicActivity(Optional<List<TaxStatusEconomicActivitySat>> economicActivity);
 
@@ -283,16 +284,12 @@ public final class TaxStatusSat {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, TaxPayerInformationStage, AddressStage, _FinalStage {
+  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, _FinalStage {
     private String id;
 
     private String link;
 
     private String createdAt;
-
-    private TaxStatusTaxPayerInformationSat taxPayerInformation;
-
-    private TaxStatusAddressSat address;
 
     private Optional<String> pdf = Optional.empty();
 
@@ -305,6 +302,10 @@ public final class TaxStatusSat {
     private Optional<List<TaxStatusRegimensSat>> regimes = Optional.empty();
 
     private Optional<List<TaxStatusEconomicActivitySat>> economicActivity = Optional.empty();
+
+    private Optional<TaxStatusAddressSat> address = Optional.empty();
+
+    private Optional<TaxStatusTaxPayerInformationSat> taxPayerInformation = Optional.empty();
 
     private Optional<String> idCif = Optional.empty();
 
@@ -365,22 +366,8 @@ public final class TaxStatusSat {
      */
     @Override
     @JsonSetter("created_at")
-    public TaxPayerInformationStage createdAt(String createdAt) {
+    public _FinalStage createdAt(String createdAt) {
       this.createdAt = createdAt;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("tax_payer_information")
-    public AddressStage taxPayerInformation(TaxStatusTaxPayerInformationSat taxPayerInformation) {
-      this.taxPayerInformation = taxPayerInformation;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("address")
-    public _FinalStage address(TaxStatusAddressSat address) {
-      this.address = address;
       return this;
     }
 
@@ -503,6 +490,39 @@ public final class TaxStatusSat {
     public _FinalStage economicActivity(
         Optional<List<TaxStatusEconomicActivitySat>> economicActivity) {
       this.economicActivity = economicActivity;
+      return this;
+    }
+
+    @Override
+    public _FinalStage address(TaxStatusAddressSat address) {
+      this.address = Optional.of(address);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "address",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage address(Optional<TaxStatusAddressSat> address) {
+      this.address = address;
+      return this;
+    }
+
+    @Override
+    public _FinalStage taxPayerInformation(TaxStatusTaxPayerInformationSat taxPayerInformation) {
+      this.taxPayerInformation = Optional.of(taxPayerInformation);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "tax_payer_information",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage taxPayerInformation(
+        Optional<TaxStatusTaxPayerInformationSat> taxPayerInformation) {
+      this.taxPayerInformation = taxPayerInformation;
       return this;
     }
 

@@ -30,9 +30,9 @@ public final class TaxStatusDian {
 
   private final Optional<String> idCif;
 
-  private final TaxStatusTaxPayerInformationDian taxPayerInformation;
+  private final Optional<TaxStatusTaxPayerInformationDian> taxPayerInformation;
 
-  private final TaxStatusAddressDian address;
+  private final Optional<TaxStatusAddressDian> address;
 
   private final Optional<List<TaxStatusEconomicActivityDian>> economicActivity;
 
@@ -50,8 +50,9 @@ public final class TaxStatusDian {
 
   TaxStatusDian(String id, String link, Optional<String> collectedAt, String createdAt,
       Optional<String> placeAndDateOfIssuance, Optional<String> officialName,
-      Optional<String> idCif, TaxStatusTaxPayerInformationDian taxPayerInformation,
-      TaxStatusAddressDian address, Optional<List<TaxStatusEconomicActivityDian>> economicActivity,
+      Optional<String> idCif, Optional<TaxStatusTaxPayerInformationDian> taxPayerInformation,
+      Optional<TaxStatusAddressDian> address,
+      Optional<List<TaxStatusEconomicActivityDian>> economicActivity,
       Optional<List<TaxStatusRegimensDian>> regimes,
       Optional<List<TaxStatusObligationsDian>> obligations, Optional<String> digitalStamp,
       Optional<String> digitalStampChain, Optional<String> pdf) {
@@ -130,12 +131,12 @@ public final class TaxStatusDian {
   }
 
   @JsonProperty("tax_payer_information")
-  public TaxStatusTaxPayerInformationDian getTaxPayerInformation() {
+  public Optional<TaxStatusTaxPayerInformationDian> getTaxPayerInformation() {
     return taxPayerInformation;
   }
 
   @JsonProperty("address")
-  public TaxStatusAddressDian getAddress() {
+  public Optional<TaxStatusAddressDian> getAddress() {
     return address;
   }
 
@@ -226,15 +227,7 @@ public final class TaxStatusDian {
   }
 
   public interface CreatedAtStage {
-    TaxPayerInformationStage createdAt(String createdAt);
-  }
-
-  public interface TaxPayerInformationStage {
-    AddressStage taxPayerInformation(TaxStatusTaxPayerInformationDian taxPayerInformation);
-  }
-
-  public interface AddressStage {
-    _FinalStage address(TaxStatusAddressDian address);
+    _FinalStage createdAt(String createdAt);
   }
 
   public interface _FinalStage {
@@ -255,6 +248,14 @@ public final class TaxStatusDian {
     _FinalStage idCif(Optional<String> idCif);
 
     _FinalStage idCif(String idCif);
+
+    _FinalStage taxPayerInformation(Optional<TaxStatusTaxPayerInformationDian> taxPayerInformation);
+
+    _FinalStage taxPayerInformation(TaxStatusTaxPayerInformationDian taxPayerInformation);
+
+    _FinalStage address(Optional<TaxStatusAddressDian> address);
+
+    _FinalStage address(TaxStatusAddressDian address);
 
     _FinalStage economicActivity(Optional<List<TaxStatusEconomicActivityDian>> economicActivity);
 
@@ -284,16 +285,12 @@ public final class TaxStatusDian {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, TaxPayerInformationStage, AddressStage, _FinalStage {
+  public static final class Builder implements IdStage, LinkStage, CreatedAtStage, _FinalStage {
     private String id;
 
     private String link;
 
     private String createdAt;
-
-    private TaxStatusTaxPayerInformationDian taxPayerInformation;
-
-    private TaxStatusAddressDian address;
 
     private Optional<String> pdf = Optional.empty();
 
@@ -306,6 +303,10 @@ public final class TaxStatusDian {
     private Optional<List<TaxStatusRegimensDian>> regimes = Optional.empty();
 
     private Optional<List<TaxStatusEconomicActivityDian>> economicActivity = Optional.empty();
+
+    private Optional<TaxStatusAddressDian> address = Optional.empty();
+
+    private Optional<TaxStatusTaxPayerInformationDian> taxPayerInformation = Optional.empty();
 
     private Optional<String> idCif = Optional.empty();
 
@@ -366,22 +367,8 @@ public final class TaxStatusDian {
      */
     @Override
     @JsonSetter("created_at")
-    public TaxPayerInformationStage createdAt(String createdAt) {
+    public _FinalStage createdAt(String createdAt) {
       this.createdAt = createdAt;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("tax_payer_information")
-    public AddressStage taxPayerInformation(TaxStatusTaxPayerInformationDian taxPayerInformation) {
-      this.taxPayerInformation = taxPayerInformation;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("address")
-    public _FinalStage address(TaxStatusAddressDian address) {
-      this.address = address;
       return this;
     }
 
@@ -504,6 +491,39 @@ public final class TaxStatusDian {
     public _FinalStage economicActivity(
         Optional<List<TaxStatusEconomicActivityDian>> economicActivity) {
       this.economicActivity = economicActivity;
+      return this;
+    }
+
+    @Override
+    public _FinalStage address(TaxStatusAddressDian address) {
+      this.address = Optional.of(address);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "address",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage address(Optional<TaxStatusAddressDian> address) {
+      this.address = address;
+      return this;
+    }
+
+    @Override
+    public _FinalStage taxPayerInformation(TaxStatusTaxPayerInformationDian taxPayerInformation) {
+      this.taxPayerInformation = Optional.of(taxPayerInformation);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "tax_payer_information",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage taxPayerInformation(
+        Optional<TaxStatusTaxPayerInformationDian> taxPayerInformation) {
+      this.taxPayerInformation = taxPayerInformation;
       return this;
     }
 

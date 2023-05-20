@@ -19,11 +19,11 @@ import java.util.Optional;
 public final class RecurringExpenses {
   private final Optional<String> id;
 
-  private final Account account;
+  private final Optional<Account> account;
 
   private final Optional<String> name;
 
-  private final List<RecurringExpenseSourceTransaction> transactions;
+  private final List<Optional<RecurringExpenseSourceTransaction>> transactions;
 
   private final EnumRecurringExpenseFrequency frequency;
 
@@ -35,14 +35,16 @@ public final class RecurringExpenses {
 
   private final EnumRecurringExpenseCategory category;
 
-  private final EnumRecurringExpensePaymentType paymentType;
+  private final Optional<EnumRecurringExpensePaymentType> paymentType;
 
   private int _cachedHashCode;
 
-  RecurringExpenses(Optional<String> id, Account account, Optional<String> name,
-      List<RecurringExpenseSourceTransaction> transactions, EnumRecurringExpenseFrequency frequency,
-      double averageTransactionAmount, double medianTransactionAmount, int daysSinceLastTransaction,
-      EnumRecurringExpenseCategory category, EnumRecurringExpensePaymentType paymentType) {
+  RecurringExpenses(Optional<String> id, Optional<Account> account, Optional<String> name,
+      List<Optional<RecurringExpenseSourceTransaction>> transactions,
+      EnumRecurringExpenseFrequency frequency, double averageTransactionAmount,
+      double medianTransactionAmount, int daysSinceLastTransaction,
+      EnumRecurringExpenseCategory category,
+      Optional<EnumRecurringExpensePaymentType> paymentType) {
     this.id = id;
     this.account = account;
     this.name = name;
@@ -64,7 +66,7 @@ public final class RecurringExpenses {
   }
 
   @JsonProperty("account")
-  public Account getAccount() {
+  public Optional<Account> getAccount() {
     return account;
   }
 
@@ -81,7 +83,7 @@ public final class RecurringExpenses {
    * @return An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.
    */
   @JsonProperty("transactions")
-  public List<RecurringExpenseSourceTransaction> getTransactions() {
+  public List<Optional<RecurringExpenseSourceTransaction>> getTransactions() {
     return transactions;
   }
 
@@ -121,7 +123,7 @@ public final class RecurringExpenses {
   }
 
   @JsonProperty("payment_type")
-  public EnumRecurringExpensePaymentType getPaymentType() {
+  public Optional<EnumRecurringExpensePaymentType> getPaymentType() {
     return paymentType;
   }
 
@@ -148,18 +150,14 @@ public final class RecurringExpenses {
     return "RecurringExpenses{" + "id: " + id + ", account: " + account + ", name: " + name + ", transactions: " + transactions + ", frequency: " + frequency + ", averageTransactionAmount: " + averageTransactionAmount + ", medianTransactionAmount: " + medianTransactionAmount + ", daysSinceLastTransaction: " + daysSinceLastTransaction + ", category: " + category + ", paymentType: " + paymentType + "}";
   }
 
-  public static AccountStage builder() {
+  public static FrequencyStage builder() {
     return new Builder();
-  }
-
-  public interface AccountStage {
-    FrequencyStage account(Account account);
-
-    Builder from(RecurringExpenses other);
   }
 
   public interface FrequencyStage {
     AverageTransactionAmountStage frequency(EnumRecurringExpenseFrequency frequency);
+
+    Builder from(RecurringExpenses other);
   }
 
   public interface AverageTransactionAmountStage {
@@ -175,11 +173,7 @@ public final class RecurringExpenses {
   }
 
   public interface CategoryStage {
-    PaymentTypeStage category(EnumRecurringExpenseCategory category);
-  }
-
-  public interface PaymentTypeStage {
-    _FinalStage paymentType(EnumRecurringExpensePaymentType paymentType);
+    _FinalStage category(EnumRecurringExpenseCategory category);
   }
 
   public interface _FinalStage {
@@ -189,23 +183,29 @@ public final class RecurringExpenses {
 
     _FinalStage id(String id);
 
+    _FinalStage account(Optional<Account> account);
+
+    _FinalStage account(Account account);
+
     _FinalStage name(Optional<String> name);
 
     _FinalStage name(String name);
 
-    _FinalStage transactions(List<RecurringExpenseSourceTransaction> transactions);
+    _FinalStage transactions(List<Optional<RecurringExpenseSourceTransaction>> transactions);
 
-    _FinalStage addTransactions(RecurringExpenseSourceTransaction transactions);
+    _FinalStage addTransactions(Optional<RecurringExpenseSourceTransaction> transactions);
 
-    _FinalStage addAllTransactions(List<RecurringExpenseSourceTransaction> transactions);
+    _FinalStage addAllTransactions(List<Optional<RecurringExpenseSourceTransaction>> transactions);
+
+    _FinalStage paymentType(Optional<EnumRecurringExpensePaymentType> paymentType);
+
+    _FinalStage paymentType(EnumRecurringExpensePaymentType paymentType);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements AccountStage, FrequencyStage, AverageTransactionAmountStage, MedianTransactionAmountStage, DaysSinceLastTransactionStage, CategoryStage, PaymentTypeStage, _FinalStage {
-    private Account account;
-
+  public static final class Builder implements FrequencyStage, AverageTransactionAmountStage, MedianTransactionAmountStage, DaysSinceLastTransactionStage, CategoryStage, _FinalStage {
     private EnumRecurringExpenseFrequency frequency;
 
     private double averageTransactionAmount;
@@ -216,11 +216,13 @@ public final class RecurringExpenses {
 
     private EnumRecurringExpenseCategory category;
 
-    private EnumRecurringExpensePaymentType paymentType;
+    private Optional<EnumRecurringExpensePaymentType> paymentType = Optional.empty();
 
-    private List<RecurringExpenseSourceTransaction> transactions = new ArrayList<>();
+    private List<Optional<RecurringExpenseSourceTransaction>> transactions = new ArrayList<>();
 
     private Optional<String> name = Optional.empty();
+
+    private Optional<Account> account = Optional.empty();
 
     private Optional<String> id = Optional.empty();
 
@@ -239,13 +241,6 @@ public final class RecurringExpenses {
       daysSinceLastTransaction(other.getDaysSinceLastTransaction());
       category(other.getCategory());
       paymentType(other.getPaymentType());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("account")
-    public FrequencyStage account(Account account) {
-      this.account = account;
       return this;
     }
 
@@ -292,14 +287,23 @@ public final class RecurringExpenses {
 
     @Override
     @JsonSetter("category")
-    public PaymentTypeStage category(EnumRecurringExpenseCategory category) {
+    public _FinalStage category(EnumRecurringExpenseCategory category) {
       this.category = category;
       return this;
     }
 
     @Override
-    @JsonSetter("payment_type")
     public _FinalStage paymentType(EnumRecurringExpensePaymentType paymentType) {
+      this.paymentType = Optional.of(paymentType);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "payment_type",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage paymentType(Optional<EnumRecurringExpensePaymentType> paymentType) {
       this.paymentType = paymentType;
       return this;
     }
@@ -309,7 +313,8 @@ public final class RecurringExpenses {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage addAllTransactions(List<RecurringExpenseSourceTransaction> transactions) {
+    public _FinalStage addAllTransactions(
+        List<Optional<RecurringExpenseSourceTransaction>> transactions) {
       this.transactions.addAll(transactions);
       return this;
     }
@@ -319,7 +324,7 @@ public final class RecurringExpenses {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage addTransactions(RecurringExpenseSourceTransaction transactions) {
+    public _FinalStage addTransactions(Optional<RecurringExpenseSourceTransaction> transactions) {
       this.transactions.add(transactions);
       return this;
     }
@@ -329,7 +334,8 @@ public final class RecurringExpenses {
         value = "transactions",
         nulls = Nulls.SKIP
     )
-    public _FinalStage transactions(List<RecurringExpenseSourceTransaction> transactions) {
+    public _FinalStage transactions(
+        List<Optional<RecurringExpenseSourceTransaction>> transactions) {
       this.transactions.clear();
       this.transactions.addAll(transactions);
       return this;
@@ -353,6 +359,22 @@ public final class RecurringExpenses {
     )
     public _FinalStage name(Optional<String> name) {
       this.name = name;
+      return this;
+    }
+
+    @Override
+    public _FinalStage account(Account account) {
+      this.account = Optional.of(account);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "account",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage account(Optional<Account> account) {
+      this.account = account;
       return this;
     }
 

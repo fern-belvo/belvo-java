@@ -3,29 +3,31 @@ package com.belvo.api.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonDeserialize(
     builder = RecevablesTransactionFees.Builder.class
 )
 public final class RecevablesTransactionFees {
-  private final EnumReceivableTransactionFeeType type;
+  private final Optional<EnumReceivableTransactionFeeType> type;
 
   private final double value;
 
   private int _cachedHashCode;
 
-  RecevablesTransactionFees(EnumReceivableTransactionFeeType type, double value) {
+  RecevablesTransactionFees(Optional<EnumReceivableTransactionFeeType> type, double value) {
     this.type = type;
     this.value = value;
   }
 
   @JsonProperty("type")
-  public EnumReceivableTransactionFeeType getType() {
+  public Optional<EnumReceivableTransactionFeeType> getType() {
     return type;
   }
 
@@ -60,31 +62,31 @@ public final class RecevablesTransactionFees {
     return "RecevablesTransactionFees{" + "type: " + type + ", value: " + value + "}";
   }
 
-  public static TypeStage builder() {
+  public static ValueStage builder() {
     return new Builder();
-  }
-
-  public interface TypeStage {
-    ValueStage type(EnumReceivableTransactionFeeType type);
-
-    Builder from(RecevablesTransactionFees other);
   }
 
   public interface ValueStage {
     _FinalStage value(double value);
+
+    Builder from(RecevablesTransactionFees other);
   }
 
   public interface _FinalStage {
     RecevablesTransactionFees build();
+
+    _FinalStage type(Optional<EnumReceivableTransactionFeeType> type);
+
+    _FinalStage type(EnumReceivableTransactionFeeType type);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TypeStage, ValueStage, _FinalStage {
-    private EnumReceivableTransactionFeeType type;
-
+  public static final class Builder implements ValueStage, _FinalStage {
     private double value;
+
+    private Optional<EnumReceivableTransactionFeeType> type = Optional.empty();
 
     private Builder() {
     }
@@ -96,13 +98,6 @@ public final class RecevablesTransactionFees {
       return this;
     }
 
-    @Override
-    @JsonSetter("type")
-    public ValueStage type(EnumReceivableTransactionFeeType type) {
-      this.type = type;
-      return this;
-    }
-
     /**
      * <p>The value of <code>fees.type</code>.</p>
      * @return Reference to {@code this} so that method calls can be chained together.
@@ -111,6 +106,22 @@ public final class RecevablesTransactionFees {
     @JsonSetter("value")
     public _FinalStage value(double value) {
       this.value = value;
+      return this;
+    }
+
+    @Override
+    public _FinalStage type(EnumReceivableTransactionFeeType type) {
+      this.type = Optional.of(type);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "type",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage type(Optional<EnumReceivableTransactionFeeType> type) {
+      this.type = type;
       return this;
     }
 

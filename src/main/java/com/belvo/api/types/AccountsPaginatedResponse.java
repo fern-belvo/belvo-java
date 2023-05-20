@@ -23,12 +23,12 @@ public final class AccountsPaginatedResponse {
 
   private final Optional<String> previous;
 
-  private final Optional<List<Account>> results;
+  private final Optional<List<Optional<Account>>> results;
 
   private int _cachedHashCode;
 
   AccountsPaginatedResponse(Optional<Integer> count, Optional<String> next,
-      Optional<String> previous, Optional<List<Account>> results) {
+      Optional<String> previous, Optional<List<Optional<Account>>> results) {
     this.count = count;
     this.next = next;
     this.previous = previous;
@@ -64,7 +64,7 @@ public final class AccountsPaginatedResponse {
    * @return An array of Account objects.
    */
   @JsonProperty("results")
-  public Optional<List<Account>> getResults() {
+  public Optional<List<Optional<Account>>> getResults() {
     return results;
   }
 
@@ -105,7 +105,7 @@ public final class AccountsPaginatedResponse {
 
     private Optional<String> previous = Optional.empty();
 
-    private Optional<List<Account>> results = Optional.empty();
+    private Optional<List<Optional<Account>>> results = Optional.empty();
 
     private Builder() {
     }
@@ -164,12 +164,12 @@ public final class AccountsPaginatedResponse {
         value = "results",
         nulls = Nulls.SKIP
     )
-    public Builder results(Optional<List<Account>> results) {
+    public Builder results(Optional<List<Optional<Account>>> results) {
       this.results = results;
       return this;
     }
 
-    public Builder results(List<Account> results) {
+    public Builder results(List<Optional<Account>> results) {
       this.results = Optional.of(results);
       return this;
     }

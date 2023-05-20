@@ -42,7 +42,7 @@ public final class TaxRetentions {
 
   private final Optional<String> senderName;
 
-  private final EnumTaxRetentionReceiverNationality receiverNationality;
+  private final Optional<EnumTaxRetentionReceiverNationality> receiverNationality;
 
   private final Optional<String> receiverId;
 
@@ -66,11 +66,11 @@ public final class TaxRetentions {
       Optional<String> createdAt, Optional<String> invoiceIdentification, Optional<String> version,
       Optional<Integer> code, Optional<String> issuedAt, Optional<String> certifiedAt,
       Optional<String> cancelledAt, Optional<String> senderId, Optional<String> senderName,
-      EnumTaxRetentionReceiverNationality receiverNationality, Optional<String> receiverId,
-      Optional<String> receiverName, Optional<Double> totalInvoiceAmount,
-      Optional<Double> totalExemptAmount, Optional<Double> totalRetainedAmount,
-      Optional<Double> totalTaxableAmount, Optional<List<RetentionBreakdown>> retentionBreakdown,
-      Optional<String> xml) {
+      Optional<EnumTaxRetentionReceiverNationality> receiverNationality,
+      Optional<String> receiverId, Optional<String> receiverName,
+      Optional<Double> totalInvoiceAmount, Optional<Double> totalExemptAmount,
+      Optional<Double> totalRetainedAmount, Optional<Double> totalTaxableAmount,
+      Optional<List<RetentionBreakdown>> retentionBreakdown, Optional<String> xml) {
     this.id = id;
     this.link = link;
     this.collectedAt = collectedAt;
@@ -191,7 +191,7 @@ public final class TaxRetentions {
   }
 
   @JsonProperty("receiver_nationality")
-  public EnumTaxRetentionReceiverNationality getReceiverNationality() {
+  public Optional<EnumTaxRetentionReceiverNationality> getReceiverNationality() {
     return receiverNationality;
   }
 
@@ -282,150 +282,59 @@ public final class TaxRetentions {
     return "TaxRetentions{" + "id: " + id + ", link: " + link + ", collectedAt: " + collectedAt + ", createdAt: " + createdAt + ", invoiceIdentification: " + invoiceIdentification + ", version: " + version + ", code: " + code + ", issuedAt: " + issuedAt + ", certifiedAt: " + certifiedAt + ", cancelledAt: " + cancelledAt + ", senderId: " + senderId + ", senderName: " + senderName + ", receiverNationality: " + receiverNationality + ", receiverId: " + receiverId + ", receiverName: " + receiverName + ", totalInvoiceAmount: " + totalInvoiceAmount + ", totalExemptAmount: " + totalExemptAmount + ", totalRetainedAmount: " + totalRetainedAmount + ", totalTaxableAmount: " + totalTaxableAmount + ", retentionBreakdown: " + retentionBreakdown + ", xml: " + xml + "}";
   }
 
-  public static ReceiverNationalityStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface ReceiverNationalityStage {
-    _FinalStage receiverNationality(EnumTaxRetentionReceiverNationality receiverNationality);
-
-    Builder from(TaxRetentions other);
-  }
-
-  public interface _FinalStage {
-    TaxRetentions build();
-
-    _FinalStage id(Optional<String> id);
-
-    _FinalStage id(String id);
-
-    _FinalStage link(Optional<String> link);
-
-    _FinalStage link(String link);
-
-    _FinalStage collectedAt(Optional<String> collectedAt);
-
-    _FinalStage collectedAt(String collectedAt);
-
-    _FinalStage createdAt(Optional<String> createdAt);
-
-    _FinalStage createdAt(String createdAt);
-
-    _FinalStage invoiceIdentification(Optional<String> invoiceIdentification);
-
-    _FinalStage invoiceIdentification(String invoiceIdentification);
-
-    _FinalStage version(Optional<String> version);
-
-    _FinalStage version(String version);
-
-    _FinalStage code(Optional<Integer> code);
-
-    _FinalStage code(Integer code);
-
-    _FinalStage issuedAt(Optional<String> issuedAt);
-
-    _FinalStage issuedAt(String issuedAt);
-
-    _FinalStage certifiedAt(Optional<String> certifiedAt);
-
-    _FinalStage certifiedAt(String certifiedAt);
-
-    _FinalStage cancelledAt(Optional<String> cancelledAt);
-
-    _FinalStage cancelledAt(String cancelledAt);
-
-    _FinalStage senderId(Optional<String> senderId);
-
-    _FinalStage senderId(String senderId);
-
-    _FinalStage senderName(Optional<String> senderName);
-
-    _FinalStage senderName(String senderName);
-
-    _FinalStage receiverId(Optional<String> receiverId);
-
-    _FinalStage receiverId(String receiverId);
-
-    _FinalStage receiverName(Optional<String> receiverName);
-
-    _FinalStage receiverName(String receiverName);
-
-    _FinalStage totalInvoiceAmount(Optional<Double> totalInvoiceAmount);
-
-    _FinalStage totalInvoiceAmount(Double totalInvoiceAmount);
-
-    _FinalStage totalExemptAmount(Optional<Double> totalExemptAmount);
-
-    _FinalStage totalExemptAmount(Double totalExemptAmount);
-
-    _FinalStage totalRetainedAmount(Optional<Double> totalRetainedAmount);
-
-    _FinalStage totalRetainedAmount(Double totalRetainedAmount);
-
-    _FinalStage totalTaxableAmount(Optional<Double> totalTaxableAmount);
-
-    _FinalStage totalTaxableAmount(Double totalTaxableAmount);
-
-    _FinalStage retentionBreakdown(Optional<List<RetentionBreakdown>> retentionBreakdown);
-
-    _FinalStage retentionBreakdown(List<RetentionBreakdown> retentionBreakdown);
-
-    _FinalStage xml(Optional<String> xml);
-
-    _FinalStage xml(String xml);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements ReceiverNationalityStage, _FinalStage {
-    private EnumTaxRetentionReceiverNationality receiverNationality;
-
-    private Optional<String> xml = Optional.empty();
-
-    private Optional<List<RetentionBreakdown>> retentionBreakdown = Optional.empty();
-
-    private Optional<Double> totalTaxableAmount = Optional.empty();
-
-    private Optional<Double> totalRetainedAmount = Optional.empty();
-
-    private Optional<Double> totalExemptAmount = Optional.empty();
-
-    private Optional<Double> totalInvoiceAmount = Optional.empty();
-
-    private Optional<String> receiverName = Optional.empty();
-
-    private Optional<String> receiverId = Optional.empty();
-
-    private Optional<String> senderName = Optional.empty();
-
-    private Optional<String> senderId = Optional.empty();
-
-    private Optional<String> cancelledAt = Optional.empty();
-
-    private Optional<String> certifiedAt = Optional.empty();
-
-    private Optional<String> issuedAt = Optional.empty();
-
-    private Optional<Integer> code = Optional.empty();
-
-    private Optional<String> version = Optional.empty();
-
-    private Optional<String> invoiceIdentification = Optional.empty();
-
-    private Optional<String> createdAt = Optional.empty();
-
-    private Optional<String> collectedAt = Optional.empty();
+  public static final class Builder {
+    private Optional<String> id = Optional.empty();
 
     private Optional<String> link = Optional.empty();
 
-    private Optional<String> id = Optional.empty();
+    private Optional<String> collectedAt = Optional.empty();
+
+    private Optional<String> createdAt = Optional.empty();
+
+    private Optional<String> invoiceIdentification = Optional.empty();
+
+    private Optional<String> version = Optional.empty();
+
+    private Optional<Integer> code = Optional.empty();
+
+    private Optional<String> issuedAt = Optional.empty();
+
+    private Optional<String> certifiedAt = Optional.empty();
+
+    private Optional<String> cancelledAt = Optional.empty();
+
+    private Optional<String> senderId = Optional.empty();
+
+    private Optional<String> senderName = Optional.empty();
+
+    private Optional<EnumTaxRetentionReceiverNationality> receiverNationality = Optional.empty();
+
+    private Optional<String> receiverId = Optional.empty();
+
+    private Optional<String> receiverName = Optional.empty();
+
+    private Optional<Double> totalInvoiceAmount = Optional.empty();
+
+    private Optional<Double> totalExemptAmount = Optional.empty();
+
+    private Optional<Double> totalRetainedAmount = Optional.empty();
+
+    private Optional<Double> totalTaxableAmount = Optional.empty();
+
+    private Optional<List<RetentionBreakdown>> retentionBreakdown = Optional.empty();
+
+    private Optional<String> xml = Optional.empty();
 
     private Builder() {
     }
 
-    @Override
     public Builder from(TaxRetentions other) {
       id(other.getId());
       link(other.getLink());
@@ -451,415 +360,301 @@ public final class TaxRetentions {
       return this;
     }
 
-    @Override
-    @JsonSetter("receiver_nationality")
-    public _FinalStage receiverNationality(
-        EnumTaxRetentionReceiverNationality receiverNationality) {
-      this.receiverNationality = receiverNationality;
-      return this;
-    }
-
-    /**
-     * <p>The tax retention document in XML form.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage xml(String xml) {
-      this.xml = Optional.of(xml);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "xml",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage xml(Optional<String> xml) {
-      this.xml = xml;
-      return this;
-    }
-
-    /**
-     * <p>A breakdown of the retained taxes.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage retentionBreakdown(List<RetentionBreakdown> retentionBreakdown) {
-      this.retentionBreakdown = Optional.of(retentionBreakdown);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "retention_breakdown",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage retentionBreakdown(Optional<List<RetentionBreakdown>> retentionBreakdown) {
-      this.retentionBreakdown = retentionBreakdown;
-      return this;
-    }
-
-    /**
-     * <p>The total amount that can be taxed. Calculated as <code>total_invoice_amount</code> - <code>total_exempt_amount</code>.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage totalTaxableAmount(Double totalTaxableAmount) {
-      this.totalTaxableAmount = Optional.of(totalTaxableAmount);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "total_taxable_amount",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage totalTaxableAmount(Optional<Double> totalTaxableAmount) {
-      this.totalTaxableAmount = totalTaxableAmount;
-      return this;
-    }
-
-    /**
-     * <p>Total tax retained.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage totalRetainedAmount(Double totalRetainedAmount) {
-      this.totalRetainedAmount = Optional.of(totalRetainedAmount);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "total_retained_amount",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage totalRetainedAmount(Optional<Double> totalRetainedAmount) {
-      this.totalRetainedAmount = totalRetainedAmount;
-      return this;
-    }
-
-    /**
-     * <p>Total amount that is exempt from taxation.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage totalExemptAmount(Double totalExemptAmount) {
-      this.totalExemptAmount = Optional.of(totalExemptAmount);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "total_exempt_amount",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage totalExemptAmount(Optional<Double> totalExemptAmount) {
-      this.totalExemptAmount = totalExemptAmount;
-      return this;
-    }
-
-    /**
-     * <p>The total amount of the invoice that the tax retention relates to.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage totalInvoiceAmount(Double totalInvoiceAmount) {
-      this.totalInvoiceAmount = Optional.of(totalInvoiceAmount);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "total_invoice_amount",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage totalInvoiceAmount(Optional<Double> totalInvoiceAmount) {
-      this.totalInvoiceAmount = totalInvoiceAmount;
-      return this;
-    }
-
-    /**
-     * <p>The name of the invoice receiver.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverName(String receiverName) {
-      this.receiverName = Optional.of(receiverName);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "receiver_name",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage receiverName(Optional<String> receiverName) {
-      this.receiverName = receiverName;
-      return this;
-    }
-
-    /**
-     * <p>The fiscal ID of the invoice receiver.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage receiverId(String receiverId) {
-      this.receiverId = Optional.of(receiverId);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "receiver_id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage receiverId(Optional<String> receiverId) {
-      this.receiverId = receiverId;
-      return this;
-    }
-
-    /**
-     * <p>The name of the invoice sender.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderName(String senderName) {
-      this.senderName = Optional.of(senderName);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "sender_name",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage senderName(Optional<String> senderName) {
-      this.senderName = senderName;
-      return this;
-    }
-
-    /**
-     * <p>The fiscal ID of the invoice sender.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage senderId(String senderId) {
-      this.senderId = Optional.of(senderId);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "sender_id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage senderId(Optional<String> senderId) {
-      this.senderId = senderId;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the tax retention was canceled (if applicable).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage cancelledAt(String cancelledAt) {
-      this.cancelledAt = Optional.of(cancelledAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "cancelled_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage cancelledAt(Optional<String> cancelledAt) {
-      this.cancelledAt = cancelledAt;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the tax retention was certified.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage certifiedAt(String certifiedAt) {
-      this.certifiedAt = Optional.of(certifiedAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "certified_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage certifiedAt(Optional<String> certifiedAt) {
-      this.certifiedAt = certifiedAt;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the tax retention was issued.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage issuedAt(String issuedAt) {
-      this.issuedAt = Optional.of(issuedAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "issued_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage issuedAt(Optional<String> issuedAt) {
-      this.issuedAt = issuedAt;
-      return this;
-    }
-
-    /**
-     * <p>The tax retention code. For more information, see our <a href="https://developers.belvo.com/docs/sat-catalogs#retention-code">SAT Catalogs DevPortal article</a>.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage code(Integer code) {
-      this.code = Optional.of(code);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "code",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage code(Optional<Integer> code) {
-      this.code = code;
-      return this;
-    }
-
-    /**
-     * <p>The CFDI version of the tax retentions.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage version(String version) {
-      this.version = Optional.of(version);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "version",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage version(Optional<String> version) {
-      this.version = version;
-      return this;
-    }
-
-    /**
-     * <p>The fiscal institution's unique ID for the invoice that the tax retention relates to.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage invoiceIdentification(String invoiceIdentification) {
-      this.invoiceIdentification = Optional.of(invoiceIdentification);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "invoice_identification",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage invoiceIdentification(Optional<String> invoiceIdentification) {
-      this.invoiceIdentification = invoiceIdentification;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the data point was last updated in Belvo's database.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage createdAt(String createdAt) {
-      this.createdAt = Optional.of(createdAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "created_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage createdAt(Optional<String> createdAt) {
-      this.createdAt = createdAt;
-      return this;
-    }
-
-    /**
-     * <p>The ISO-8601 timestamp of when the data point was collected.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage collectedAt(String collectedAt) {
-      this.collectedAt = Optional.of(collectedAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "collected_at",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage collectedAt(Optional<String> collectedAt) {
-      this.collectedAt = collectedAt;
-      return this;
-    }
-
-    /**
-     * <p>The <code>link.id</code> the tax retention belongs to.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage link(String link) {
-      this.link = Optional.of(link);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "link",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage link(Optional<String> link) {
-      this.link = link;
-      return this;
-    }
-
-    /**
-     * <p>Belvo's unique identifier used to reference the current tax retention statement.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage id(String id) {
-      this.id = Optional.of(id);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
         value = "id",
         nulls = Nulls.SKIP
     )
-    public _FinalStage id(Optional<String> id) {
+    public Builder id(Optional<String> id) {
       this.id = id;
       return this;
     }
 
-    @Override
+    public Builder id(String id) {
+      this.id = Optional.of(id);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "link",
+        nulls = Nulls.SKIP
+    )
+    public Builder link(Optional<String> link) {
+      this.link = link;
+      return this;
+    }
+
+    public Builder link(String link) {
+      this.link = Optional.of(link);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "collected_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder collectedAt(Optional<String> collectedAt) {
+      this.collectedAt = collectedAt;
+      return this;
+    }
+
+    public Builder collectedAt(String collectedAt) {
+      this.collectedAt = Optional.of(collectedAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "created_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder createdAt(Optional<String> createdAt) {
+      this.createdAt = createdAt;
+      return this;
+    }
+
+    public Builder createdAt(String createdAt) {
+      this.createdAt = Optional.of(createdAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "invoice_identification",
+        nulls = Nulls.SKIP
+    )
+    public Builder invoiceIdentification(Optional<String> invoiceIdentification) {
+      this.invoiceIdentification = invoiceIdentification;
+      return this;
+    }
+
+    public Builder invoiceIdentification(String invoiceIdentification) {
+      this.invoiceIdentification = Optional.of(invoiceIdentification);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "version",
+        nulls = Nulls.SKIP
+    )
+    public Builder version(Optional<String> version) {
+      this.version = version;
+      return this;
+    }
+
+    public Builder version(String version) {
+      this.version = Optional.of(version);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "code",
+        nulls = Nulls.SKIP
+    )
+    public Builder code(Optional<Integer> code) {
+      this.code = code;
+      return this;
+    }
+
+    public Builder code(Integer code) {
+      this.code = Optional.of(code);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "issued_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder issuedAt(Optional<String> issuedAt) {
+      this.issuedAt = issuedAt;
+      return this;
+    }
+
+    public Builder issuedAt(String issuedAt) {
+      this.issuedAt = Optional.of(issuedAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "certified_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder certifiedAt(Optional<String> certifiedAt) {
+      this.certifiedAt = certifiedAt;
+      return this;
+    }
+
+    public Builder certifiedAt(String certifiedAt) {
+      this.certifiedAt = Optional.of(certifiedAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "cancelled_at",
+        nulls = Nulls.SKIP
+    )
+    public Builder cancelledAt(Optional<String> cancelledAt) {
+      this.cancelledAt = cancelledAt;
+      return this;
+    }
+
+    public Builder cancelledAt(String cancelledAt) {
+      this.cancelledAt = Optional.of(cancelledAt);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "sender_id",
+        nulls = Nulls.SKIP
+    )
+    public Builder senderId(Optional<String> senderId) {
+      this.senderId = senderId;
+      return this;
+    }
+
+    public Builder senderId(String senderId) {
+      this.senderId = Optional.of(senderId);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "sender_name",
+        nulls = Nulls.SKIP
+    )
+    public Builder senderName(Optional<String> senderName) {
+      this.senderName = senderName;
+      return this;
+    }
+
+    public Builder senderName(String senderName) {
+      this.senderName = Optional.of(senderName);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "receiver_nationality",
+        nulls = Nulls.SKIP
+    )
+    public Builder receiverNationality(
+        Optional<EnumTaxRetentionReceiverNationality> receiverNationality) {
+      this.receiverNationality = receiverNationality;
+      return this;
+    }
+
+    public Builder receiverNationality(EnumTaxRetentionReceiverNationality receiverNationality) {
+      this.receiverNationality = Optional.of(receiverNationality);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "receiver_id",
+        nulls = Nulls.SKIP
+    )
+    public Builder receiverId(Optional<String> receiverId) {
+      this.receiverId = receiverId;
+      return this;
+    }
+
+    public Builder receiverId(String receiverId) {
+      this.receiverId = Optional.of(receiverId);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "receiver_name",
+        nulls = Nulls.SKIP
+    )
+    public Builder receiverName(Optional<String> receiverName) {
+      this.receiverName = receiverName;
+      return this;
+    }
+
+    public Builder receiverName(String receiverName) {
+      this.receiverName = Optional.of(receiverName);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "total_invoice_amount",
+        nulls = Nulls.SKIP
+    )
+    public Builder totalInvoiceAmount(Optional<Double> totalInvoiceAmount) {
+      this.totalInvoiceAmount = totalInvoiceAmount;
+      return this;
+    }
+
+    public Builder totalInvoiceAmount(Double totalInvoiceAmount) {
+      this.totalInvoiceAmount = Optional.of(totalInvoiceAmount);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "total_exempt_amount",
+        nulls = Nulls.SKIP
+    )
+    public Builder totalExemptAmount(Optional<Double> totalExemptAmount) {
+      this.totalExemptAmount = totalExemptAmount;
+      return this;
+    }
+
+    public Builder totalExemptAmount(Double totalExemptAmount) {
+      this.totalExemptAmount = Optional.of(totalExemptAmount);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "total_retained_amount",
+        nulls = Nulls.SKIP
+    )
+    public Builder totalRetainedAmount(Optional<Double> totalRetainedAmount) {
+      this.totalRetainedAmount = totalRetainedAmount;
+      return this;
+    }
+
+    public Builder totalRetainedAmount(Double totalRetainedAmount) {
+      this.totalRetainedAmount = Optional.of(totalRetainedAmount);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "total_taxable_amount",
+        nulls = Nulls.SKIP
+    )
+    public Builder totalTaxableAmount(Optional<Double> totalTaxableAmount) {
+      this.totalTaxableAmount = totalTaxableAmount;
+      return this;
+    }
+
+    public Builder totalTaxableAmount(Double totalTaxableAmount) {
+      this.totalTaxableAmount = Optional.of(totalTaxableAmount);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "retention_breakdown",
+        nulls = Nulls.SKIP
+    )
+    public Builder retentionBreakdown(Optional<List<RetentionBreakdown>> retentionBreakdown) {
+      this.retentionBreakdown = retentionBreakdown;
+      return this;
+    }
+
+    public Builder retentionBreakdown(List<RetentionBreakdown> retentionBreakdown) {
+      this.retentionBreakdown = Optional.of(retentionBreakdown);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "xml",
+        nulls = Nulls.SKIP
+    )
+    public Builder xml(Optional<String> xml) {
+      this.xml = xml;
+      return this;
+    }
+
+    public Builder xml(String xml) {
+      this.xml = Optional.of(xml);
+      return this;
+    }
+
     public TaxRetentions build() {
       return new TaxRetentions(id, link, collectedAt, createdAt, invoiceIdentification, version, code, issuedAt, certifiedAt, cancelledAt, senderId, senderName, receiverNationality, receiverId, receiverName, totalInvoiceAmount, totalExemptAmount, totalRetainedAmount, totalTaxableAmount, retentionBreakdown, xml);
     }

@@ -46,9 +46,9 @@ public final class Account {
 
   private final Optional<String> lastAccessedAt;
 
-  private final AccountsCreditData creditData;
+  private final Optional<AccountsCreditData> creditData;
 
-  private final AccountsLoanData loanData;
+  private final Optional<AccountsLoanData> loanData;
 
   private final Optional<List<AccountsFundsData>> fundsData;
 
@@ -65,8 +65,8 @@ public final class Account {
       Optional<String> balanceType, Optional<String> type, Optional<String> name,
       Optional<String> number, AccountsBalance balance, Optional<String> currency,
       Optional<String> publicIdentificationName, Optional<String> publicIdentificationValue,
-      Optional<String> lastAccessedAt, AccountsCreditData creditData, AccountsLoanData loanData,
-      Optional<List<AccountsFundsData>> fundsData,
+      Optional<String> lastAccessedAt, Optional<AccountsCreditData> creditData,
+      Optional<AccountsLoanData> loanData, Optional<List<AccountsFundsData>> fundsData,
       Optional<AccountsReceivablesData> receivablesData, Optional<String> bankProductId,
       Optional<String> internalIdentification) {
     this.id = id;
@@ -213,12 +213,12 @@ public final class Account {
   }
 
   @JsonProperty("credit_data")
-  public AccountsCreditData getCreditData() {
+  public Optional<AccountsCreditData> getCreditData() {
     return creditData;
   }
 
   @JsonProperty("loan_data")
-  public AccountsLoanData getLoanData() {
+  public Optional<AccountsLoanData> getLoanData() {
     return loanData;
   }
 
@@ -287,15 +287,7 @@ public final class Account {
   }
 
   public interface BalanceStage {
-    CreditDataStage balance(AccountsBalance balance);
-  }
-
-  public interface CreditDataStage {
-    LoanDataStage creditData(AccountsCreditData creditData);
-  }
-
-  public interface LoanDataStage {
-    _FinalStage loanData(AccountsLoanData loanData);
+    _FinalStage balance(AccountsBalance balance);
   }
 
   public interface _FinalStage {
@@ -353,6 +345,14 @@ public final class Account {
 
     _FinalStage lastAccessedAt(String lastAccessedAt);
 
+    _FinalStage creditData(Optional<AccountsCreditData> creditData);
+
+    _FinalStage creditData(AccountsCreditData creditData);
+
+    _FinalStage loanData(Optional<AccountsLoanData> loanData);
+
+    _FinalStage loanData(AccountsLoanData loanData);
+
     _FinalStage fundsData(Optional<List<AccountsFundsData>> fundsData);
 
     _FinalStage fundsData(List<AccountsFundsData> fundsData);
@@ -373,14 +373,10 @@ public final class Account {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements CollectedAtStage, BalanceStage, CreditDataStage, LoanDataStage, _FinalStage {
+  public static final class Builder implements CollectedAtStage, BalanceStage, _FinalStage {
     private String collectedAt;
 
     private AccountsBalance balance;
-
-    private AccountsCreditData creditData;
-
-    private AccountsLoanData loanData;
 
     private Optional<String> internalIdentification = Optional.empty();
 
@@ -389,6 +385,10 @@ public final class Account {
     private Optional<AccountsReceivablesData> receivablesData = Optional.empty();
 
     private Optional<List<AccountsFundsData>> fundsData = Optional.empty();
+
+    private Optional<AccountsLoanData> loanData = Optional.empty();
+
+    private Optional<AccountsCreditData> creditData = Optional.empty();
 
     private Optional<String> lastAccessedAt = Optional.empty();
 
@@ -458,22 +458,8 @@ public final class Account {
 
     @Override
     @JsonSetter("balance")
-    public CreditDataStage balance(AccountsBalance balance) {
+    public _FinalStage balance(AccountsBalance balance) {
       this.balance = balance;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("credit_data")
-    public LoanDataStage creditData(AccountsCreditData creditData) {
-      this.creditData = creditData;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("loan_data")
-    public _FinalStage loanData(AccountsLoanData loanData) {
-      this.loanData = loanData;
       return this;
     }
 
@@ -552,6 +538,38 @@ public final class Account {
     )
     public _FinalStage fundsData(Optional<List<AccountsFundsData>> fundsData) {
       this.fundsData = fundsData;
+      return this;
+    }
+
+    @Override
+    public _FinalStage loanData(AccountsLoanData loanData) {
+      this.loanData = Optional.of(loanData);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "loan_data",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage loanData(Optional<AccountsLoanData> loanData) {
+      this.loanData = loanData;
+      return this;
+    }
+
+    @Override
+    public _FinalStage creditData(AccountsCreditData creditData) {
+      this.creditData = Optional.of(creditData);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "credit_data",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage creditData(Optional<AccountsCreditData> creditData) {
+      this.creditData = creditData;
       return this;
     }
 

@@ -36,7 +36,7 @@ public final class AccountsLoanData {
 
   private final Optional<List<AccountsLoanDataInterestRate>> interestRates;
 
-  private final Optional<List<AccountsLoanDataFees>> fees;
+  private final Optional<List<Optional<AccountsLoanDataFees>>> fees;
 
   private final Optional<Integer> numberOfInstallmentsTotal;
 
@@ -70,7 +70,8 @@ public final class AccountsLoanData {
       Optional<String> loanType, Optional<String> paymentDay, Optional<Double> outstandingPrincipal,
       Optional<Double> outstandingBalance, Optional<Double> monthlyPayment,
       Optional<List<AccountsLoanDataInterestRate>> interestRates,
-      Optional<List<AccountsLoanDataFees>> fees, Optional<Integer> numberOfInstallmentsTotal,
+      Optional<List<Optional<AccountsLoanDataFees>>> fees,
+      Optional<Integer> numberOfInstallmentsTotal,
       Optional<Integer> numberOfInstallmentsOutstanding, Optional<String> contractStartDate,
       Optional<String> contractEndDate, Optional<String> contractNumber,
       Optional<Double> creditLimit, Optional<Double> lastPeriodBalance,
@@ -178,7 +179,7 @@ public final class AccountsLoanData {
    * @return Breakdown of the fees applied to the loan.
    */
   @JsonProperty("fees")
-  public Optional<List<AccountsLoanDataFees>> getFees() {
+  public Optional<List<Optional<AccountsLoanDataFees>>> getFees() {
     return fees;
   }
 
@@ -362,9 +363,9 @@ public final class AccountsLoanData {
 
     _FinalStage interestRates(List<AccountsLoanDataInterestRate> interestRates);
 
-    _FinalStage fees(Optional<List<AccountsLoanDataFees>> fees);
+    _FinalStage fees(Optional<List<Optional<AccountsLoanDataFees>>> fees);
 
-    _FinalStage fees(List<AccountsLoanDataFees> fees);
+    _FinalStage fees(List<Optional<AccountsLoanDataFees>> fees);
 
     _FinalStage numberOfInstallmentsTotal(Optional<Integer> numberOfInstallmentsTotal);
 
@@ -451,7 +452,7 @@ public final class AccountsLoanData {
 
     private Optional<Integer> numberOfInstallmentsTotal = Optional.empty();
 
-    private Optional<List<AccountsLoanDataFees>> fees = Optional.empty();
+    private Optional<List<Optional<AccountsLoanDataFees>>> fees = Optional.empty();
 
     private Optional<List<AccountsLoanDataInterestRate>> interestRates = Optional.empty();
 
@@ -785,7 +786,7 @@ public final class AccountsLoanData {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage fees(List<AccountsLoanDataFees> fees) {
+    public _FinalStage fees(List<Optional<AccountsLoanDataFees>> fees) {
       this.fees = Optional.of(fees);
       return this;
     }
@@ -795,7 +796,7 @@ public final class AccountsLoanData {
         value = "fees",
         nulls = Nulls.SKIP
     )
-    public _FinalStage fees(Optional<List<AccountsLoanDataFees>> fees) {
+    public _FinalStage fees(Optional<List<Optional<AccountsLoanDataFees>>> fees) {
       this.fees = fees;
       return this;
     }

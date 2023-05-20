@@ -18,13 +18,13 @@ import java.util.Optional;
 public final class AccountsLoanDataInterestRate {
   private final Optional<String> name;
 
-  private final EnumLoanDataInterestRateType type;
+  private final Optional<EnumLoanDataInterestRateType> type;
 
   private final Optional<Double> value;
 
   private int _cachedHashCode;
 
-  AccountsLoanDataInterestRate(Optional<String> name, EnumLoanDataInterestRateType type,
+  AccountsLoanDataInterestRate(Optional<String> name, Optional<EnumLoanDataInterestRateType> type,
       Optional<Double> value) {
     this.name = name;
     this.type = type;
@@ -40,7 +40,7 @@ public final class AccountsLoanDataInterestRate {
   }
 
   @JsonProperty("type")
-  public EnumLoanDataInterestRateType getType() {
+  public Optional<EnumLoanDataInterestRateType> getType() {
     return type;
   }
 
@@ -75,42 +75,23 @@ public final class AccountsLoanDataInterestRate {
     return "AccountsLoanDataInterestRate{" + "name: " + name + ", type: " + type + ", value: " + value + "}";
   }
 
-  public static TypeStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface TypeStage {
-    _FinalStage type(EnumLoanDataInterestRateType type);
-
-    Builder from(AccountsLoanDataInterestRate other);
-  }
-
-  public interface _FinalStage {
-    AccountsLoanDataInterestRate build();
-
-    _FinalStage name(Optional<String> name);
-
-    _FinalStage name(String name);
-
-    _FinalStage value(Optional<Double> value);
-
-    _FinalStage value(Double value);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TypeStage, _FinalStage {
-    private EnumLoanDataInterestRateType type;
+  public static final class Builder {
+    private Optional<String> name = Optional.empty();
+
+    private Optional<EnumLoanDataInterestRateType> type = Optional.empty();
 
     private Optional<Double> value = Optional.empty();
-
-    private Optional<String> name = Optional.empty();
 
     private Builder() {
     }
 
-    @Override
     public Builder from(AccountsLoanDataInterestRate other) {
       name(other.getName());
       type(other.getType());
@@ -118,54 +99,48 @@ public final class AccountsLoanDataInterestRate {
       return this;
     }
 
-    @Override
-    @JsonSetter("type")
-    public _FinalStage type(EnumLoanDataInterestRateType type) {
-      this.type = type;
-      return this;
-    }
-
-    /**
-     * <p>The interest rate (in percent or currency value).</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage value(Double value) {
-      this.value = Optional.of(value);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "value",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage value(Optional<Double> value) {
-      this.value = value;
-      return this;
-    }
-
-    /**
-     * <p>The name of the type of interest rate applied to the loan.</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage name(String name) {
-      this.name = Optional.of(name);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
         value = "name",
         nulls = Nulls.SKIP
     )
-    public _FinalStage name(Optional<String> name) {
+    public Builder name(Optional<String> name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    public Builder name(String name) {
+      this.name = Optional.of(name);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "type",
+        nulls = Nulls.SKIP
+    )
+    public Builder type(Optional<EnumLoanDataInterestRateType> type) {
+      this.type = type;
+      return this;
+    }
+
+    public Builder type(EnumLoanDataInterestRateType type) {
+      this.type = Optional.of(type);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "value",
+        nulls = Nulls.SKIP
+    )
+    public Builder value(Optional<Double> value) {
+      this.value = value;
+      return this;
+    }
+
+    public Builder value(Double value) {
+      this.value = Optional.of(value);
+      return this;
+    }
+
     public AccountsLoanDataInterestRate build() {
       return new AccountsLoanDataInterestRate(name, type, value);
     }

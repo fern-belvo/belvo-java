@@ -31,13 +31,13 @@ public final class InvestmentsPortfolio {
 
   private final String currency;
 
-  private final Optional<List<InvestmentsPortfolioInstrument>> instruments;
+  private final Optional<List<Optional<InvestmentsPortfolioInstrument>>> instruments;
 
   private int _cachedHashCode;
 
   InvestmentsPortfolio(Optional<String> id, String name, EnumInvestmentPortfolioType type,
       Optional<String> balanceType, Optional<Double> balanceGross, Optional<Double> balanceNet,
-      String currency, Optional<List<InvestmentsPortfolioInstrument>> instruments) {
+      String currency, Optional<List<Optional<InvestmentsPortfolioInstrument>>> instruments) {
     this.id = id;
     this.name = name;
     this.type = type;
@@ -112,7 +112,7 @@ public final class InvestmentsPortfolio {
    * @return An array of instruments that fall into the investment portfolio.
    */
   @JsonProperty("instruments")
-  public Optional<List<InvestmentsPortfolioInstrument>> getInstruments() {
+  public Optional<List<Optional<InvestmentsPortfolioInstrument>>> getInstruments() {
     return instruments;
   }
 
@@ -176,9 +176,9 @@ public final class InvestmentsPortfolio {
 
     _FinalStage balanceNet(Double balanceNet);
 
-    _FinalStage instruments(Optional<List<InvestmentsPortfolioInstrument>> instruments);
+    _FinalStage instruments(Optional<List<Optional<InvestmentsPortfolioInstrument>>> instruments);
 
-    _FinalStage instruments(List<InvestmentsPortfolioInstrument> instruments);
+    _FinalStage instruments(List<Optional<InvestmentsPortfolioInstrument>> instruments);
   }
 
   @JsonIgnoreProperties(
@@ -191,7 +191,7 @@ public final class InvestmentsPortfolio {
 
     private String currency;
 
-    private Optional<List<InvestmentsPortfolioInstrument>> instruments = Optional.empty();
+    private Optional<List<Optional<InvestmentsPortfolioInstrument>>> instruments = Optional.empty();
 
     private Optional<Double> balanceNet = Optional.empty();
 
@@ -257,7 +257,7 @@ public final class InvestmentsPortfolio {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage instruments(List<InvestmentsPortfolioInstrument> instruments) {
+    public _FinalStage instruments(List<Optional<InvestmentsPortfolioInstrument>> instruments) {
       this.instruments = Optional.of(instruments);
       return this;
     }
@@ -267,7 +267,8 @@ public final class InvestmentsPortfolio {
         value = "instruments",
         nulls = Nulls.SKIP
     )
-    public _FinalStage instruments(Optional<List<InvestmentsPortfolioInstrument>> instruments) {
+    public _FinalStage instruments(
+        Optional<List<Optional<InvestmentsPortfolioInstrument>>> instruments) {
       this.instruments = instruments;
       return this;
     }

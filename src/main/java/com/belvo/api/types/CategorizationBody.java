@@ -44,7 +44,7 @@ public final class CategorizationBody {
 
   private final Optional<String> subcategory;
 
-  private final CategorizationMerchantData merchant;
+  private final Optional<CategorizationMerchantData> merchant;
 
   private int _cachedHashCode;
 
@@ -52,7 +52,7 @@ public final class CategorizationBody {
       String accountHolderId, String accountId, EnumCategorizationAccountCategory accountCategory,
       String valueDate, String description, EnumCategorizationTransactionType type, double amount,
       String currency, String institution, Optional<Integer> mcc, Optional<String> category,
-      Optional<String> subcategory, CategorizationMerchantData merchant) {
+      Optional<String> subcategory, Optional<CategorizationMerchantData> merchant) {
     this.transactionId = transactionId;
     this.accountHolderType = accountHolderType;
     this.accountHolderId = accountHolderId;
@@ -176,7 +176,7 @@ public final class CategorizationBody {
   }
 
   @JsonProperty("merchant")
-  public CategorizationMerchantData getMerchant() {
+  public Optional<CategorizationMerchantData> getMerchant() {
     return merchant;
   }
 
@@ -250,11 +250,7 @@ public final class CategorizationBody {
   }
 
   public interface InstitutionStage {
-    MerchantStage institution(String institution);
-  }
-
-  public interface MerchantStage {
-    _FinalStage merchant(CategorizationMerchantData merchant);
+    _FinalStage institution(String institution);
   }
 
   public interface _FinalStage {
@@ -271,12 +267,16 @@ public final class CategorizationBody {
     _FinalStage subcategory(Optional<String> subcategory);
 
     _FinalStage subcategory(String subcategory);
+
+    _FinalStage merchant(Optional<CategorizationMerchantData> merchant);
+
+    _FinalStage merchant(CategorizationMerchantData merchant);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TransactionIdStage, AccountHolderTypeStage, AccountHolderIdStage, AccountIdStage, AccountCategoryStage, ValueDateStage, DescriptionStage, TypeStage, AmountStage, CurrencyStage, InstitutionStage, MerchantStage, _FinalStage {
+  public static final class Builder implements TransactionIdStage, AccountHolderTypeStage, AccountHolderIdStage, AccountIdStage, AccountCategoryStage, ValueDateStage, DescriptionStage, TypeStage, AmountStage, CurrencyStage, InstitutionStage, _FinalStage {
     private String transactionId;
 
     private EnumCategorizationAccountHolderType accountHolderType;
@@ -299,7 +299,7 @@ public final class CategorizationBody {
 
     private String institution;
 
-    private CategorizationMerchantData merchant;
+    private Optional<CategorizationMerchantData> merchant = Optional.empty();
 
     private Optional<String> subcategory = Optional.empty();
 
@@ -443,14 +443,23 @@ public final class CategorizationBody {
      */
     @Override
     @JsonSetter("institution")
-    public MerchantStage institution(String institution) {
+    public _FinalStage institution(String institution) {
       this.institution = institution;
       return this;
     }
 
     @Override
-    @JsonSetter("merchant")
     public _FinalStage merchant(CategorizationMerchantData merchant) {
+      this.merchant = Optional.of(merchant);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "merchant",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage merchant(Optional<CategorizationMerchantData> merchant) {
       this.merchant = merchant;
       return this;
     }
